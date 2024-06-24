@@ -1,13 +1,15 @@
 'use client';
 import React, { useState } from 'react';
 
+// Props interface to organize button props
 interface Props {
   children: React.ReactNode;
   changeSelect?: () => void;
   multiselect: boolean;
 }
 
-const Button: React.FC<Props> = ({ children, changeSelect }) => {
+const Button: React.FC<Props> = ({ children, changeSelect, multiselect }) => {
+  // selected state to toggle button appearance
   const [selected, useSelected] = useState<boolean>(false);
 
   return (
