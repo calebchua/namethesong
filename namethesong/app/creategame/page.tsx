@@ -18,7 +18,7 @@ const CreateGamePage = () => {
       <div className="w-4/5 border-2 border-white"></div>
       <div className="w-4/5 mt-8 mb-12 space-y-6">
         <div className="space-y-2">
-          <div className="text-3xl">Song Duration: {duration}</div>
+          <div className="text-3xl">Max Song Duration: {duration}</div>
           <div className="flex-auto space-y-2">
             <Button changeSelect={() => setDuration(1)}>1 Second</Button>
             <Button changeSelect={() => setDuration(2)}>2 Seconds</Button>
