@@ -1,7 +1,12 @@
+import { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
 
 const rubik = Rubik({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Name the Song"
+}
 
 export default function RootLayout({
   children,

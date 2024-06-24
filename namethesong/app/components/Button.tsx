@@ -1,11 +1,19 @@
 'use client';
-import React, { DetailedHTMLProps } from 'react'
+import React, { DetailedHTMLProps } from 'react';
 
-type Props = DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {}
+interface Props {
+  children: React.ReactNode;
+  changeSelect?: () => void;
+}
 
-const Button = ( props: Props ) => {
+const Button: React.FC<Props> = ({ children, changeSelect }) => {
   return (
-    <button className="border-2 border-white rounded-md py-2 px-4 text-xl mx-2 hover:underline" {...props}/>
+    <button
+      onClick={changeSelect}
+      className="border-2 border-white rounded-md py-2 px-4 text-xl mx-2 hover:underline"
+    >
+      {children}
+    </button>
   )
 }
 
