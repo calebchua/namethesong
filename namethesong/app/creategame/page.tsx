@@ -39,19 +39,18 @@ const CreateGamePage = () => {
       <div className="w-4/5 border-2 border-white"></div>
       <div className="w-4/5 mt-8 mb-12 space-y-6">
         <div className="space-y-2">
-          <div className="text-3xl">Max Song Duration: {duration}</div>
+          <div className="text-3xl">Max Song Duration:</div>
           <div className="flex-auto space-y-2">
-            {/* <RadioButton changeSelect={() => setDuration(1)} value="1 Second"/> */}
-            <Button changeSelect={() => setDuration(1)}>1 Second</Button>
-            <Button changeSelect={() => setDuration(2)}>2 Seconds</Button>
-            <Button changeSelect={() => setDuration(3)}>3 Seconds</Button>
-            <Button changeSelect={() => setDuration(5)}>5 Seconds</Button>
-            <Button changeSelect={() => setDuration(10)}>10 Seconds</Button>
-            <Button changeSelect={() => setDuration(-1)}>No Limit</Button>
+            <Button changeSelect={() => setDuration(1)} selected={duration==1}>1 Second</Button>
+            <Button changeSelect={() => setDuration(2)} selected={duration==2}>2 Seconds</Button>
+            <Button changeSelect={() => setDuration(3)} selected={duration==3}>3 Seconds</Button>
+            <Button changeSelect={() => setDuration(5)} selected={duration==5}>5 Seconds</Button>
+            <Button changeSelect={() => setDuration(10)} selected={duration==10}>10 Seconds</Button>
+            <Button changeSelect={() => setDuration(-1)} selected={duration==-1}>No Limit</Button>
           </div>
         </div>
         <div className="space-y-2">
-          <div className="text-3xl">Play From: </div>
+          <div className="text-3xl">Play From:</div>
           <div className="flex-auto space-y-2">
             <Button changeSelect={() => setPlayFrom({...playFrom, beginning: !playFrom.beginning})} selected={playFrom.beginning}>Beginning</Button>
             <Button changeSelect={() => setPlayFrom({...playFrom, middle: !playFrom.middle})} selected={playFrom.middle}>Middle</Button>
