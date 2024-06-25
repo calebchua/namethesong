@@ -1,11 +1,13 @@
 'use client';
 import React, { useState } from 'react';
-import Button from '../components/Button';
 import Link from "next/link";
+import Button from '../components/Button';
+import RadioButton from '../components/RadioButton';
+
 
 const CreateGamePage = () => {
   // states to keep track of selected custom settings
-  const [duration, setDuration] = useState<number | null>(null); // look into styling radio buttons
+  const [duration, setDuration] = useState<number | null>(null);
   const [playFrom, setPlayFrom] = useState({
     beginning: false,
     middle: false,
@@ -37,44 +39,72 @@ const CreateGamePage = () => {
       <div className="w-4/5 border-2 border-white"></div>
       <div className="w-4/5 mt-8 mb-12 space-y-6">
         <div className="space-y-2">
-          <div className="text-3xl">Max Song Duration:</div>
+          <div className="text-3xl">Max Song Duration: {duration}</div>
           <div className="flex-auto space-y-2">
-            <Button changeSelect={() => setDuration(1)} multiselect={false}>1 Second</Button>
-            <Button changeSelect={() => setDuration(2)} multiselect={false}>2 Seconds</Button>
-            <Button changeSelect={() => setDuration(3)} multiselect={false}>3 Seconds</Button>
-            <Button changeSelect={() => setDuration(5)} multiselect={false}>5 Seconds</Button>
-            <Button changeSelect={() => setDuration(10)} multiselect={false}>10 Seconds</Button>
-            <Button changeSelect={() => setDuration(-1)} multiselect={false}>No Limit</Button>
+            {/* <RadioButton changeSelect={() => setDuration(1)} value="1 Second"/> */}
+            <Button changeSelect={() => setDuration(1)}>1 Second</Button>
+            <Button changeSelect={() => setDuration(2)}>2 Seconds</Button>
+            <Button changeSelect={() => setDuration(3)}>3 Seconds</Button>
+            <Button changeSelect={() => setDuration(5)}>5 Seconds</Button>
+            <Button changeSelect={() => setDuration(10)}>10 Seconds</Button>
+            <Button changeSelect={() => setDuration(-1)}>No Limit</Button>
           </div>
         </div>
         <div className="space-y-2">
-          <div className="text-3xl">Play From:</div>
+          <div className="text-3xl">Play From: </div>
           <div className="flex-auto space-y-2">
-            <Button>Beginning</Button>
-            <Button>Middle</Button>
-            <Button>Ending</Button>
-            <Button>Random</Button>
+            <Button changeSelect={() => setPlayFrom({...playFrom, beginning: !playFrom.beginning})} selected={playFrom.beginning}>Beginning</Button>
+            <Button changeSelect={() => setPlayFrom({...playFrom, middle: !playFrom.middle})} selected={playFrom.middle}>Middle</Button>
+            <Button changeSelect={() => setPlayFrom({...playFrom, ending: !playFrom.ending})} selected={playFrom.ending}>Ending</Button>
+            <Button changeSelect={() => setPlayFrom({...playFrom, random: !playFrom.random})} selected={playFrom.random}>Random</Button>
           </div>
         </div>
         <div className="space-y-2">
           <div className="text-3xl">Modifiers:</div>
           <div className="flex-auto space-y-2">
             <div>
-              <Button>Original Song</Button>
-              <Button>Instrumental</Button>
-              <Button>Piano</Button>
-              <Button>Guitar</Button>
+              <Button 
+                changeSelect={() => setModifiersSong({...modifiersSong, originalSong: !modifiersSong.originalSong})} 
+                selected={modifiersSong.originalSong}
+              >Original Song</Button>
+              <Button
+                changeSelect={() => setModifiersSong({...modifiersSong, instrumental: !modifiersSong.instrumental})} 
+                selected={modifiersSong.instrumental}
+              >Instrumental</Button>
+              <Button
+                changeSelect={() => setModifiersSong({...modifiersSong, piano: !modifiersSong.piano})} 
+                selected={modifiersSong.piano}
+              >Piano</Button>
+              <Button
+                changeSelect={() => setModifiersSong({...modifiersSong, guitar: !modifiersSong.guitar})} 
+                selected={modifiersSong.guitar}
+              >Guitar</Button>
             </div>
             <div>
-              <Button>Original Tempo</Button>
-              <Button>Sped Up</Button>
-              <Button>Slowed Down</Button>
+              <Button 
+                changeSelect={() => setModifiersTempo({...modifiersTempo, originalTempo: !modifiersTempo.originalTempo})}
+                selected={modifiersTempo.originalTempo}
+              >Original Tempo</Button>
+              <Button
+                changeSelect={() => setModifiersTempo({...modifiersTempo, spedUp: !modifiersTempo.spedUp})}
+                selected={modifiersTempo.spedUp}
+              >Sped Up</Button>
+              <Button
+                changeSelect={() => setModifiersTempo({...modifiersTempo, slowedDown: !modifiersTempo.slowedDown})}
+                selected={modifiersTempo.slowedDown}
+              >Slowed Down</Button>
             </div>
           </div>
         </div>
       </div>
       <div>
-        <Link href="/game" className="border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white">Start Game</Link>
+        <Link 
+          href="/game"
+          className="border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white"
+          onClick={() => {
+            console.log('Duration: ', duration, '\n\n', 'PlayFrom: ', JSON.stringify(playFrom), '\n\n', 'ModifiersSong: ', JSON.stringify(modifiersSong), '\n\n', 'ModifiersTempo: ', JSON.stringify(modifiersTempo));
+          }}
+        >Start Game</Link>
       </div>
     </div>
   )
