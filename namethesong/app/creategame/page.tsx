@@ -1,9 +1,8 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import Link from "next/link";
-import Button from '../components/Button';
-import RadioButton from '../components/RadioButton';
-
+import Button from "../components/Button";
+import { userAuthorization } from "../api/spotifyAPI";
 
 const CreateGamePage = () => {
   // states to keep track of selected custom settings
@@ -26,6 +25,11 @@ const CreateGamePage = () => {
     slowedDown: false,
   });
 
+  // redirects to Spotify login page
+  const authUser = async () => {
+    window.location.href = await userAuthorization();
+  }
+
   // rendered page
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
@@ -34,6 +38,7 @@ const CreateGamePage = () => {
         <div className="flex items-center space-x-4">
           <div className="text-4xl font-bold">Choose Playlist:</div>
           <div className="text-4xl">Dropdown Placeholder</div>
+          <button onClick={authUser}>Spotify login</button>
         </div>
       </div>
       <div className="w-4/5 border-2 border-white"></div>
@@ -101,7 +106,7 @@ const CreateGamePage = () => {
           href="/game"
           className="border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white"
           onClick={() => {
-            console.log('Duration: ', duration, '\n\n', 'PlayFrom: ', JSON.stringify(playFrom), '\n\n', 'ModifiersSong: ', JSON.stringify(modifiersSong), '\n\n', 'ModifiersTempo: ', JSON.stringify(modifiersTempo));
+            console.log("Duration: ", duration, "\n\n", "PlayFrom: ", JSON.stringify(playFrom), "\n\n", "ModifiersSong: ", JSON.stringify(modifiersSong), "\n\n", "ModifiersTempo: ", JSON.stringify(modifiersTempo));
           }}
         >Start Game</Link>
       </div>
