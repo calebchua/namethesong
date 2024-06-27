@@ -18,11 +18,10 @@ export const getClientCredentialToken = async () => {
     });
 }
 
-// generates random string for state parameter in userAuthorization (security)
-const generateRandomString = (length: number) => {
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const values = crypto.getRandomValues(new Uint8Array(length));
-  return values.reduce((acc, x) => acc + possible[x % possible.length], "");
+// gets access token with user authorization, user must have logged in through link generate from userAuthorization()
+// see more info here: https://developer.spotify.com/documentation/web-api/tutorials/code-flow
+export const getAuthorizationCodeToken = async () => {
+  
 }
 
 // generates link to redirect users to Spotify login page
@@ -35,8 +34,9 @@ export const userAuthorization = async () => {
   return "https://accounts.spotify.com/authorize?" + authArgs;
 }
 
-// gets access token with user authorization, user must have logged in through link generate from userAuthorization()
-// see more info here: https://developer.spotify.com/documentation/web-api/tutorials/code-flow
-export const getAuthorizationCodeToken = async () => {
-  
+// generates random string for state parameter in userAuthorization (security)
+const generateRandomString = (length: number) => {
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const values = crypto.getRandomValues(new Uint8Array(length));
+  return values.reduce((acc, x) => acc + possible[x % possible.length], "");
 }
