@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#ff8633",
+        spotify: "#1DB954"
       },
     },
   },

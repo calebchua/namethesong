@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Button from "../components/Button";
 import { userAuthorization } from "../api/spotifyAPI";
+import SpotifyLoginButton from "../components/SpotifyLoginButton";
 
 const CreateGamePage = () => {
   // states to keep track of selected custom settings
@@ -25,24 +26,21 @@ const CreateGamePage = () => {
     slowedDown: false,
   });
 
-  // redirects to Spotify login page
-  const authUser = async () => {
-    window.location.href = await userAuthorization();
-  }
-
   // rendered page
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
-      <div className="mb-10 space-y-10">
-        <div className="text-7xl font-bold text-center">Create Game</div>
+      <div className="mb-6 space-y-4">
+        <div className="text-7xl font-bold text-center mb-12">Create Game</div>
+        <div className="flex justify-center">
+          <SpotifyLoginButton />
+        </div>
         <div className="flex items-center space-x-4">
-          <div className="text-4xl font-bold">Choose Playlist:</div>
-          <div className="text-4xl">Dropdown Placeholder</div>
-          <button onClick={authUser}>Spotify login</button>
+          <div className="text-3xl font-bold">Choose Playlist:</div>
+          <div className="text-3xl">Dropdown Placeholder</div>
         </div>
       </div>
       <div className="w-4/5 border-2 border-white"></div>
-      <div className="w-4/5 mt-8 mb-12 space-y-6">
+      <div className="w-4/5 mt-4 mb-12 space-y-4">
         <div className="space-y-2">
           <div className="text-3xl">Max Song Duration:</div>
           <div className="flex-auto space-y-2">
@@ -104,7 +102,7 @@ const CreateGamePage = () => {
       <div>
         <Link 
           href="/game"
-          className="border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white"
+          className="border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl"
           onClick={() => {
             console.log("Duration: ", duration, "\n\n", "PlayFrom: ", JSON.stringify(playFrom), "\n\n", "ModifiersSong: ", JSON.stringify(modifiersSong), "\n\n", "ModifiersTempo: ", JSON.stringify(modifiersTempo));
           }}

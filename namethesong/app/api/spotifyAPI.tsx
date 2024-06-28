@@ -26,7 +26,7 @@ export const getAuthorizationCodeToken = async () => {
 
 // generates link to redirect users to Spotify login page
 export const userAuthorization = async () => {
-  const redirectURI = "http://localhost:3000/creategame"; // modify if hosting
+  const redirectURI = "http://localhost:3000/creategame"; // modify here if hosting
   const scope = "playlist-read-private%20playlist-read-collaborative";
   const state = generateRandomString(16);
   const authArgs = "client_id=" + process.env.CLIENT_ID + "&response_type=code" + "&redirect_uri=" + redirectURI + "&scope=" + scope + "&state=" + state;
