@@ -30,7 +30,8 @@ const CreateGamePage = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   // get code returned from Spotify login in URL
-  const code = new URLSearchParams(window.location.search).get('code');
+  const code: string | null = new URLSearchParams(window.location.search).get('code');
+  let loggedIn: boolean = false;
 
   // detect when a code is returned from Spotify in URL and get playlists
   useEffect(() => {
@@ -41,7 +42,6 @@ const CreateGamePage = () => {
     if (accessToken == null) {
       setToken();
     }
-    window.history.pushState({}, "", "/creategame");
   }, [])
 
   // rendered page
@@ -50,7 +50,7 @@ const CreateGamePage = () => {
       <div className="mb-6 space-y-4">
         <div className="text-7xl font-bold text-center mb-10">Create Game</div>
         <div className="flex justify-center">
-          <SpotifyLoginButton />
+          <SpotifyLoginButton loggedIn={code!=null}/>
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-3xl font-bold">Choose Playlist:</div>

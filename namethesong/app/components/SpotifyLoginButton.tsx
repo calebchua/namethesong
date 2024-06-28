@@ -3,7 +3,11 @@ import React from "react";
 import Image from "next/image";
 import { userAuthorization } from "../api/spotifyAPI";
 
-const SpotifyLoginButton = () => {
+interface Props {
+  loggedIn: boolean | null;
+}
+
+const SpotifyLoginButton: React.FC<Props> = ({ loggedIn }) => {
   // redirects to Spotify login page
   const authUser = async () => {
     window.location.href = await userAuthorization();
@@ -21,7 +25,7 @@ const SpotifyLoginButton = () => {
         alt="spotifylogo"
         className="mr-2"
       />
-      Login with Spotify to use custom playlists
+      {loggedIn ? "Logged in" : "Login with Spotify to use custom playlists"}
     </button>
   )
 }
