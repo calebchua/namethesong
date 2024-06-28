@@ -1,7 +1,5 @@
 "use server"
 
-// AUTH API FUNCTIONS
-
 // function used externally to get token, handles whether or not auth is clientCredential or normal Authorization
 export const getSpotifyToken = async (code: string | null): Promise<string | null> => {
   if (code) {
@@ -15,7 +13,7 @@ export const getSpotifyToken = async (code: string | null): Promise<string | nul
 export const getClientCredentialToken = async (): Promise<string | null> => {
   try {
     const response = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
+      method: 'POST',
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Basic " + btoa(process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET)
@@ -37,7 +35,7 @@ export const getClientCredentialToken = async (): Promise<string | null> => {
 export const getAuthorizationCodeToken = async (urlCode: string): Promise<string | null> => {
   try {
     const response = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
+      method: 'POST',
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Basic " + btoa(process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET)
@@ -67,44 +65,7 @@ export const userAuthorization = async () => {
 
 // generates random string for state parameter in userAuthorization (security)
 const generateRandomString = (length: number) => {
-  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const values = crypto.getRandomValues(new Uint8Array(length));
   return values.reduce((acc, x) => acc + possible[x % possible.length], "");
-}
-
-
-// SPOTIFY DATA API FUNCTIONS
-
-// gets kpop playlists (can also replace kpop with any genre that exists in spotify)
-export const getKpopPlaylists = async (token: string | null) => {
-  console.log("token: ", token);
-  try {
-    const response = await fetch("https://api.spotify.com/v1/browse/categories/kpop/playlists", {
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + token
-      }
-    });
-    const data = await response.json();
-    console.log(data);
-    return data.playlists.items;
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-    return null;
-  }
-}
-
-// gets user's Spotify profile
-export const getUserProfile = async (token: string | null) => {
-
-}
-
-// gets user's list of playlists
-export const getUserPlaylists = async (token: string | null) => {
-
-}
-
-// gets list of tracks from playlist
-export const getListOfTracksFromPlaylist = async (token: string | null) => {
-  
 }

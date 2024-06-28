@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Select from "react-select";
 import Link from "next/link";
 import Button from "../components/Button";
-import { getKpopPlaylists, getSpotifyToken } from "../api/spotifyAPI";
+import { getSpotifyToken } from "../api/spotifyAPI";
 import SpotifyLoginButton from "../components/SpotifyLoginButton";
 
 const CreateGamePage = () => {
@@ -55,7 +54,7 @@ const CreateGamePage = () => {
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-3xl font-bold">Choose Playlist:</div>
-          <Select className="text-2xl"/>
+          <div className="text-3xl">Dropdown Placeholder</div>
         </div>
       </div>
       <div className="w-4/5 border-2 border-white"></div>
@@ -122,10 +121,8 @@ const CreateGamePage = () => {
         <Link 
           href="/game"
           className="border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl"
-          onClick={async () => {
-            // console.log("Duration: ", duration, "\n\n", "PlayFrom: ", JSON.stringify(playFrom), "\n\n", "ModifiersSong: ", JSON.stringify(modifiersSong), "\n\n", "ModifiersTempo: ", JSON.stringify(modifiersTempo));
-            const lists = await getKpopPlaylists(accessToken);
-            console.log(lists);
+          onClick={() => {
+            console.log("Duration: ", duration, "\n\n", "PlayFrom: ", JSON.stringify(playFrom), "\n\n", "ModifiersSong: ", JSON.stringify(modifiersSong), "\n\n", "ModifiersTempo: ", JSON.stringify(modifiersTempo));
           }}
         >Start Game</Link>
       </div>
