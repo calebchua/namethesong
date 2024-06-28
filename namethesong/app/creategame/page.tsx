@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Button from "../components/Button";
-import { userAuthorization } from "../api/spotifyAPI";
+import { getSpotifyToken } from "../api/spotifyAPI";
 import SpotifyLoginButton from "../components/SpotifyLoginButton";
 
 const CreateGamePage = () => {
@@ -26,11 +26,29 @@ const CreateGamePage = () => {
     slowedDown: false,
   });
 
+  // access token state so we can access Spotify API
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  // get code returned from Spotify login in URL
+  const code = new URLSearchParams(window.location.search).get('code');
+
+  // detect when a code is returned from Spotify in URL and get playlists
+  useEffect(() => {
+    const setToken = async () => {
+      let token = await getSpotifyToken(code);
+      if (token) setAccessToken(token);
+    }
+    if (accessToken == null) {
+      setToken();
+    }
+    window.history.pushState({}, "", "/creategame");
+  }, [])
+
   // rendered page
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <div className="mb-6 space-y-4">
-        <div className="text-7xl font-bold text-center mb-12">Create Game</div>
+        <div className="text-7xl font-bold text-center mb-10">Create Game</div>
         <div className="flex justify-center">
           <SpotifyLoginButton />
         </div>
