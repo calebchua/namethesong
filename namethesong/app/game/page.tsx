@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from 'next/navigation'
 import { getAllTracks } from "../api/spotifyAPI";
 import { shuffle } from "../utils";
+import Button from "../components/Button";
+import Link from "next/link";
 
 // settings interface
 interface Settings {
@@ -96,17 +98,21 @@ const GamePage = () => {
   }, []);
 
   return (
-    <div>
-      <div>game page</div>
-      <button onClick={() => {
-        configureSong();
-        console.log("after config", data);
-      }
-      }
-      >test</button>
-      <div>{currentSong}</div>
-      <div>{currentPlayFrom}</div>
-      <div>{currentModifiers}</div>
+    <div className="w-screen h-screen flex flex-col justify-center items-center">
+      <div className="inline-flex justify-between w-11/12 items-center mb-4 mt-4">
+        <div className="text-5xl font-bold">Score: {songsCorrect} / {songNumber}</div>
+        <Link
+          href={{
+            pathname: "/finishgame"
+          }}
+          className={"border-2 border-white rounded-lg py-2 px-8 text-2xl mx-2 text-white bg-primary hover:underline"}
+        >End Game</Link>
+      </div>
+      <div className="flex items-center justify-center bg-black h-4/6 w-4/5">Game Component</div>
+      <div className="inline-flex justify-between w-1/4 items-center mt-4 mb-8">
+          <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg text-4xl w-32 h-32">yes</div>
+          <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg text-4xl w-32 h-32">no</div>
+      </div>
     </div>
   )
 }
