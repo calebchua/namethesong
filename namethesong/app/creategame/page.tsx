@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Button from "../components/Button";
 import { getSpotifyToken } from "../api/spotifyAPI";
@@ -24,7 +24,7 @@ const CreateGamePage = () => {
   const [modifiersTempo, setModifiersTempo] = useState({
     originalTempo: false,
     spedUp: false,
-    slowedDown: false,
+    slowedDown: false
   });
 
   // access token state so we can access Spotify API
@@ -33,31 +33,58 @@ const CreateGamePage = () => {
   // get code returned from Spotify login in URL
   const code: string | null = new URLSearchParams(window.location.search).get('code');
 
+  // prevent useEffect from triggering twice
+  const effectRan = useRef(false);
+
   // detect when a code is returned from Spotify in URL and get playlists
   useEffect(() => {
-    const setToken = async () => {
-      let token = await getSpotifyToken(code);
-      if (token) setAccessToken(token);
-    }
-    if (accessToken == null) {
+    if (effectRan.current === false) {
+      const setToken = async () => {
+        let token = await getSpotifyToken(code);
+        if (token) setAccessToken(token);
+      }
       setToken();
+    }
+
+    return () => {
+      effectRan.current = true;
     }
   }, []);
 
   // state to hold selected playlist id from dropdown
   const [selectedPlaylist, setSelectedPlaylist] = useState<string | null>(null);
 
-  // rendered page
+  // function to verify that selections have been made before starting game
+  const verifySelection = (): boolean => {
+    if (selectedPlaylist != null && duration != null && Object.values(playFrom).some(value => value === true)
+      && Object.values(modifiersSong).some(value => value === true) && Object.values(modifiersTempo).some(value => value === true)) {
+      return true;
+    }
+    return false;
+  }
+
+  // parses state objects, returns a string with names of settings == true, string can be later split
+  const parseState = (state: any): string => {
+    let stateString: string = "";
+    for (let prop in state) {
+      if (state.hasOwnProperty(prop)) {
+        if (state[prop] === true)
+          stateString += prop + ",";
+      }
+    }
+    return stateString.slice(0, -1);
+  }
+
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <div className="mb-6 space-y-4">
         <div className="text-7xl font-bold text-center mb-10">Create Game</div>
         <div className="flex justify-center">
-          <SpotifyLoginButton loggedIn={code!=null}/>
+          <SpotifyLoginButton loggedIn={code != null} />
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-3xl font-bold">Choose Playlist:</div>
-          <Dropdown token={accessToken} loggedIn={code!=null} handleChange={setSelectedPlaylist}/>
+          <Dropdown token={accessToken} loggedIn={code != null} handleChange={setSelectedPlaylist} />
         </div>
       </div>
       <div className="w-4/5 border-2 border-white"></div>
@@ -65,55 +92,55 @@ const CreateGamePage = () => {
         <div className="space-y-2">
           <div className="text-3xl">Max Song Duration:</div>
           <div className="flex-auto space-y-2">
-            <Button changeSelect={() => setDuration(1)} selected={duration==1}>1 Second</Button>
-            <Button changeSelect={() => setDuration(2)} selected={duration==2}>2 Seconds</Button>
-            <Button changeSelect={() => setDuration(3)} selected={duration==3}>3 Seconds</Button>
-            <Button changeSelect={() => setDuration(5)} selected={duration==5}>5 Seconds</Button>
-            <Button changeSelect={() => setDuration(10)} selected={duration==10}>10 Seconds</Button>
-            <Button changeSelect={() => setDuration(-1)} selected={duration==-1}>No Limit</Button>
+            <Button changeSelect={() => setDuration(1)} selected={duration == 1}>1 Second</Button>
+            <Button changeSelect={() => setDuration(2)} selected={duration == 2}>2 Seconds</Button>
+            <Button changeSelect={() => setDuration(3)} selected={duration == 3}>3 Seconds</Button>
+            <Button changeSelect={() => setDuration(5)} selected={duration == 5}>5 Seconds</Button>
+            <Button changeSelect={() => setDuration(10)} selected={duration == 10}>10 Seconds</Button>
+            <Button changeSelect={() => setDuration(-1)} selected={duration == -1}>No Limit</Button>
           </div>
         </div>
         <div className="space-y-2">
           <div className="text-3xl">Play From:</div>
           <div className="flex-auto space-y-2">
-            <Button changeSelect={() => setPlayFrom({...playFrom, beginning: !playFrom.beginning})} selected={playFrom.beginning}>Beginning</Button>
-            <Button changeSelect={() => setPlayFrom({...playFrom, middle: !playFrom.middle})} selected={playFrom.middle}>Middle</Button>
-            <Button changeSelect={() => setPlayFrom({...playFrom, ending: !playFrom.ending})} selected={playFrom.ending}>Ending</Button>
-            <Button changeSelect={() => setPlayFrom({...playFrom, random: !playFrom.random})} selected={playFrom.random}>Random</Button>
+            <Button changeSelect={() => setPlayFrom({ ...playFrom, beginning: !playFrom.beginning })} selected={playFrom.beginning}>Beginning</Button>
+            <Button changeSelect={() => setPlayFrom({ ...playFrom, middle: !playFrom.middle })} selected={playFrom.middle}>Middle</Button>
+            <Button changeSelect={() => setPlayFrom({ ...playFrom, ending: !playFrom.ending })} selected={playFrom.ending}>Ending</Button>
+            <Button changeSelect={() => setPlayFrom({ ...playFrom, random: !playFrom.random })} selected={playFrom.random}>Random</Button>
           </div>
         </div>
         <div className="space-y-2">
           <div className="text-3xl">Modifiers:</div>
           <div className="flex-auto space-y-2">
             <div>
-              <Button 
-                changeSelect={() => setModifiersSong({...modifiersSong, originalSong: !modifiersSong.originalSong})} 
+              <Button
+                changeSelect={() => setModifiersSong({ ...modifiersSong, originalSong: !modifiersSong.originalSong })}
                 selected={modifiersSong.originalSong}
               >Original Song</Button>
               <Button
-                changeSelect={() => setModifiersSong({...modifiersSong, instrumental: !modifiersSong.instrumental})} 
+                changeSelect={() => setModifiersSong({ ...modifiersSong, instrumental: !modifiersSong.instrumental })}
                 selected={modifiersSong.instrumental}
               >Instrumental</Button>
               <Button
-                changeSelect={() => setModifiersSong({...modifiersSong, piano: !modifiersSong.piano})} 
+                changeSelect={() => setModifiersSong({ ...modifiersSong, piano: !modifiersSong.piano })}
                 selected={modifiersSong.piano}
               >Piano</Button>
               <Button
-                changeSelect={() => setModifiersSong({...modifiersSong, guitar: !modifiersSong.guitar})} 
+                changeSelect={() => setModifiersSong({ ...modifiersSong, guitar: !modifiersSong.guitar })}
                 selected={modifiersSong.guitar}
               >Guitar</Button>
             </div>
             <div>
-              <Button 
-                changeSelect={() => setModifiersTempo({...modifiersTempo, originalTempo: !modifiersTempo.originalTempo})}
+              <Button
+                changeSelect={() => setModifiersTempo({ ...modifiersTempo, originalTempo: !modifiersTempo.originalTempo })}
                 selected={modifiersTempo.originalTempo}
               >Original Tempo</Button>
               <Button
-                changeSelect={() => setModifiersTempo({...modifiersTempo, spedUp: !modifiersTempo.spedUp})}
+                changeSelect={() => setModifiersTempo({ ...modifiersTempo, spedUp: !modifiersTempo.spedUp })}
                 selected={modifiersTempo.spedUp}
               >Sped Up</Button>
               <Button
-                changeSelect={() => setModifiersTempo({...modifiersTempo, slowedDown: !modifiersTempo.slowedDown})}
+                changeSelect={() => setModifiersTempo({ ...modifiersTempo, slowedDown: !modifiersTempo.slowedDown })}
                 selected={modifiersTempo.slowedDown}
               >Slowed Down</Button>
             </div>
@@ -121,15 +148,21 @@ const CreateGamePage = () => {
         </div>
       </div>
       <div>
-        <Link 
-          href={{
+        <Link
+          href={verifySelection() ? {
             pathname: "/game",
             query: {
               token: accessToken,
-              playlistId: selectedPlaylist
+              playlistId: selectedPlaylist,
+              duration: duration,
+              playFrom: parseState(playFrom),
+              modifiersSong: parseState(modifiersSong),
+              modifiersTempo: parseState(modifiersTempo)
             }
-          }}
-          className="border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl"
+          } : {}}
+          className={verifySelection() ?
+            "border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl"
+            : "border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white"}
         >Start Game</Link>
       </div>
     </div>

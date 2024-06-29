@@ -127,6 +127,7 @@ const getListOfTracksFromPlaylist = async (token: string | null, playlistId: str
   }
 }
 
+// get all tracks (if playlist is longer than 100 songs, will need to loop GET request)
 export const getAllTracks = async(token: string | null, playlistId: string | null) => {
   const response = await getListOfTracksFromPlaylist(token, playlistId);
   let list = response.tracks.items;
