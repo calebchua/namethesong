@@ -3,6 +3,8 @@ import React from "react";
 import Image from "next/image";
 import { userAuthorization } from "../api/spotifyAPI";
 
+import { FaSpotify } from "react-icons/fa";
+
 interface Props {
   loggedIn: boolean | null;
 }
@@ -18,14 +20,8 @@ const SpotifyLoginButton: React.FC<Props> = ({ loggedIn }) => {
       className="flex items-center bg-spotify border-white border-2 rounded-3xl py-2 px-6 text-2xl mx-2 hover:shadow-md"
       onClick={authUser}
     >
-      <Image 
-        src="/Spotify_Primary_Logo_RGB_White.png"
-        height={30}
-        width={30}
-        alt="spotifylogo"
-        className="mr-2"
-      />
-      {loggedIn ? "Logged in" : "Login with Spotify to use custom playlists"}
+      <FaSpotify className="mr-2 text-3xl"/>
+      {loggedIn ? "Logged in" : "Login with Spotify to use custom/followed playlists"}
     </button>
   )
 }

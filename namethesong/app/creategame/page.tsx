@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import { getSpotifyToken } from "../api/spotifyAPI";
 import SpotifyLoginButton from "../components/SpotifyLoginButton";
 import Dropdown from "../components/Dropdown";
+import { useSearchParams } from "next/navigation";
 
 const CreateGamePage = () => {
   // states to keep track of selected custom settings
@@ -31,7 +32,7 @@ const CreateGamePage = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   // get code returned from Spotify login in URL
-  const code: string | null = new URLSearchParams(window.location.search).get('code');
+  const code: string | null = useSearchParams().get('code');
 
   // prevent useEffect from triggering twice
   const effectRan = useRef(false);
@@ -147,7 +148,7 @@ const CreateGamePage = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="mb-4">
         <Link
           href={verifySelection() ? {
             pathname: "/game",

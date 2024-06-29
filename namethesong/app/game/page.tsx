@@ -3,8 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from 'next/navigation'
 import { getAllTracks } from "../api/spotifyAPI";
 import { shuffle } from "../utils";
-import Button from "../components/Button";
 import Link from "next/link";
+
+import { HiCheck } from "react-icons/hi";
+import { HiX } from "react-icons/hi";
+import { TbPlayerTrackNextFilled } from "react-icons/tb";
 
 // settings interface
 interface Settings {
@@ -113,14 +116,26 @@ const GamePage = () => {
         >End Game</Link>
       </div>
       <div className="flex items-center justify-center bg-black h-4/6 w-4/5">
-          <div>{currentSong}</div>
-          <div>{settings.duration}</div>
-          <div>{currentPlayFrom}</div>
-          <div>{currentModifiers}</div>
+        <div>{currentSong}</div>
+        <div>{settings.duration}</div>
+        <div>{currentPlayFrom}</div>
+        <div>{currentModifiers}</div>
       </div>
-      <div className="inline-flex justify-between w-1/4 items-center mt-4 mb-8">
-          <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg text-4xl w-32 h-32">yes</div>
-          <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg text-4xl w-32 h-32">no</div>
+      <div className="flex flex-col items-center my-4">
+        <div className="flex items-center justify-center mb-2 space-x-28">
+          <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-36 h-28">
+            <HiCheck/>
+          </div>
+          <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-36 h-28">
+            <HiX/>
+          </div>
+        </div>
+        <div className="flex items-center justify-center border-2 border-white rounded-lg w-24 h-10">
+          <div className="text-2xl mr-1">
+            skip
+          </div>
+          <TbPlayerTrackNextFilled className="text-xl" />
+        </div>
       </div>
     </div>
   )
