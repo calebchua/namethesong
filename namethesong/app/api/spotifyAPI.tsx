@@ -109,7 +109,47 @@ export const getUserPlaylists = async (token: string | null) => {
   }
 }
 
-// gets list of tracks from playlist
-export const getListOfTracksFromPlaylist = async (token: string | null, playlistId: string | null) => {
+// gets list of tracks from playlist (returns song name and artist only, as specified by "?fields=")
+const getListOfTracksFromPlaylist = async (token: string | null, playlistId: string | null) => {
+  const fetchUrl = "https://api.spotify.com/v1/playlists/" + playlistId + "?fields=tracks%28next%2Citems%28track%28name%2Cartists%28name%29%29%29%29";
+  try {
+    const response = await fetch(fetchUrl, {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching list of tracks from playlist:", error);
+    return null;
+  }
+}
+
+export const getAllTracks = async(token: string | null, playlistId: string | null) => {
+  const response = await getListOfTracksFromPlaylist(token, playlistId);
+  let list = response.tracks.items;
+  let next = response.tracks.next;
+  let offset = 100;
   
+  while (next) {
+    next = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks?fields=next%2Citems%28track%28name%2Cartists%28name%29%29%29&offset=" + offset;
+    try {
+      const response = await fetch(next, {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      });
+      const data = await response.json();
+      list = [...list, ...data.items]
+      next = data.next;
+      offset += 100;
+    } catch (error) {
+      console.error("Error fetching next set of tracks from playlist:", error);
+      return list;
+    }
+  }
+  return list;
 }

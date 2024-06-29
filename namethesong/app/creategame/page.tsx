@@ -46,9 +46,6 @@ const CreateGamePage = () => {
 
   // state to hold selected playlist id from dropdown
   const [selectedPlaylist, setSelectedPlaylist] = useState<string | null>(null);
-  // const handleChange = (select: string | null) => {
-  //   setSelectedPlaylist(select);
-  // }
 
   // rendered page
   return (
@@ -125,13 +122,14 @@ const CreateGamePage = () => {
       </div>
       <div>
         <Link 
-          href="/game"
-          className="border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl"
-          onClick={async () => {
-            // console.log("Duration: ", duration, "\n\n", "PlayFrom: ", JSON.stringify(playFrom), "\n\n", "ModifiersSong: ", JSON.stringify(modifiersSong), "\n\n", "ModifiersTempo: ", JSON.stringify(modifiersTempo));
-            // const lists = await getUserPlaylists(accessToken);
-            // console.log(lists);
+          href={{
+            pathname: "/game",
+            query: {
+              token: accessToken,
+              playlistId: selectedPlaylist
+            }
           }}
+          className="border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl"
         >Start Game</Link>
       </div>
     </div>
