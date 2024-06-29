@@ -43,7 +43,6 @@ const GamePage = () => {
 
   // configures current round of game, sets random song and random combination of selected settings to corresponding states
   const configureSong = () => {
-    console.log("before config: ", data);
     // set song name + artist as string
     const curr = data[songNumber];
     setCurrentSong(curr.track.name + " " + curr.track.artists[0].name);
@@ -90,12 +89,17 @@ const GamePage = () => {
         setData(fetchedTracks);
       }
       getData();
-      console.log("got and shuffled data");
     }
     return () => {
       effectRan.current = true;
     }
   }, []);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      configureSong();
+    }
+  }, [data])
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
@@ -108,7 +112,12 @@ const GamePage = () => {
           className={"border-2 border-white rounded-lg py-2 px-8 text-2xl mx-2 text-white bg-primary hover:underline"}
         >End Game</Link>
       </div>
-      <div className="flex items-center justify-center bg-black h-4/6 w-4/5">Game Component</div>
+      <div className="flex items-center justify-center bg-black h-4/6 w-4/5">
+          <div>{currentSong}</div>
+          <div>{settings.duration}</div>
+          <div>{currentPlayFrom}</div>
+          <div>{currentModifiers}</div>
+      </div>
       <div className="inline-flex justify-between w-1/4 items-center mt-4 mb-8">
           <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg text-4xl w-32 h-32">yes</div>
           <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg text-4xl w-32 h-32">no</div>
