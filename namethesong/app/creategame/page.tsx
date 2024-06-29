@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Select from "react-select";
 import Link from "next/link";
 import Button from "../components/Button";
-import { getKpopPlaylists, getSpotifyToken } from "../api/spotifyAPI";
+import { getSpotifyToken } from "../api/spotifyAPI";
 import SpotifyLoginButton from "../components/SpotifyLoginButton";
+import Dropdown from "../components/Dropdown";
 
 const CreateGamePage = () => {
   // states to keep track of selected custom settings
@@ -32,7 +32,6 @@ const CreateGamePage = () => {
 
   // get code returned from Spotify login in URL
   const code: string | null = new URLSearchParams(window.location.search).get('code');
-  let loggedIn: boolean = false;
 
   // detect when a code is returned from Spotify in URL and get playlists
   useEffect(() => {
@@ -43,7 +42,13 @@ const CreateGamePage = () => {
     if (accessToken == null) {
       setToken();
     }
-  }, [])
+  }, []);
+
+  // state to hold selected playlist id from dropdown
+  const [selectedPlaylist, setSelectedPlaylist] = useState<string | null>(null);
+  // const handleChange = (select: string | null) => {
+  //   setSelectedPlaylist(select);
+  // }
 
   // rendered page
   return (
@@ -55,7 +60,7 @@ const CreateGamePage = () => {
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-3xl font-bold">Choose Playlist:</div>
-          <Select className="text-2xl"/>
+          <Dropdown token={accessToken} loggedIn={code!=null} handleChange={setSelectedPlaylist}/>
         </div>
       </div>
       <div className="w-4/5 border-2 border-white"></div>
@@ -124,8 +129,8 @@ const CreateGamePage = () => {
           className="border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl"
           onClick={async () => {
             // console.log("Duration: ", duration, "\n\n", "PlayFrom: ", JSON.stringify(playFrom), "\n\n", "ModifiersSong: ", JSON.stringify(modifiersSong), "\n\n", "ModifiersTempo: ", JSON.stringify(modifiersTempo));
-            const lists = await getKpopPlaylists(accessToken);
-            console.log(lists);
+            // const lists = await getUserPlaylists(accessToken);
+            // console.log(lists);
           }}
         >Start Game</Link>
       </div>

@@ -76,8 +76,7 @@ const generateRandomString = (length: number) => {
 // SPOTIFY DATA API FUNCTIONS
 
 // gets kpop playlists (can also replace kpop with any genre that exists in spotify)
-export const getKpopPlaylists = async (token: string | null) => {
-  console.log("token: ", token);
+export const getPublicPlaylists = async (token: string | null) => {
   try {
     const response = await fetch("https://api.spotify.com/v1/browse/categories/kpop/playlists", {
       method: "GET",
@@ -86,7 +85,6 @@ export const getKpopPlaylists = async (token: string | null) => {
       }
     });
     const data = await response.json();
-    console.log(data);
     return data.playlists.items;
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -94,17 +92,24 @@ export const getKpopPlaylists = async (token: string | null) => {
   }
 }
 
-// gets user's Spotify profile
-export const getUserProfile = async (token: string | null) => {
-
-}
-
 // gets user's list of playlists
 export const getUserPlaylists = async (token: string | null) => {
-
+  try {
+    const response = await fetch("https://api.spotify.com/v1/me/playlists?limit=50", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    });
+    const data = await response.json();
+    return data.items;
+  } catch (error) {
+    console.error("Error fetching user's playlists:", error);
+    return null;
+  }
 }
 
 // gets list of tracks from playlist
-export const getListOfTracksFromPlaylist = async (token: string | null) => {
+export const getListOfTracksFromPlaylist = async (token: string | null, playlistId: string | null) => {
   
 }
