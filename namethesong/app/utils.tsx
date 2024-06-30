@@ -1,5 +1,6 @@
 "use server"
 
+// randomly shuffle array
 export async function shuffle<T>(array: T[]): Promise<T[]> {
     let currentIndex = array.length,  randomIndex;
 

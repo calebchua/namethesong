@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { getAllTracks } from "../api/spotifyAPI";
 import { shuffle } from "../utils";
 import Link from "next/link";
+import SettingLabel from "../components/SettingLabel";
 
 import { HiCheck } from "react-icons/hi";
 import { HiX } from "react-icons/hi";
@@ -40,15 +41,18 @@ const GamePage = () => {
   // states to maintain game
   const [songNumber, setSongNumber] = useState<number>(0); // current song number
   const [songsCorrect, setSongsCorrect] = useState<number>(0); // correct songs count
-  const [currentSong, setCurrentSong] = useState<string | null>(null); // current song playing
+  const [currentSongName, setCurrentSongName] = useState<string | null>(null); // current song playing
+  const [currentSongArtist, setCurrentSongArtist] = useState<string | null>(null); // current song playing
   const [currentPlayFrom, setCurrentPlayFrom] = useState<string | null>(null); // current setting for playFrom
-  const [currentModifiers, setCurrentModifiers] = useState<string[] | null>(null); // current modifiers for song
+  const [currentModifiersSong, setCurrentModifiersSong] = useState<string | null>(null); // current modifier for song
+  const [currentModifiersTempo, setCurrentModifiersTempo] = useState<string | null>(null); // current modifiers for tempo
 
   // configures current round of game, sets random song and random combination of selected settings to corresponding states
   const configureSong = () => {
     // set song name + artist as string
     const curr = data[songNumber];
-    setCurrentSong(curr.track.name + " " + curr.track.artists[0].name);
+    setCurrentSongName(curr.track.name);
+    setCurrentSongArtist(curr.track.artists[0].name);
 
     // get random playFrom setting
     let playFromindex = 0;
@@ -66,7 +70,7 @@ const GamePage = () => {
         modifiersSongIndex = Math.floor(Math.random() * settings.modifiersSong.length);
       }
     }
-    const modifiersSongStr = settings.modifiersSong ? settings.modifiersSong[modifiersSongIndex] : "originalSong";
+    setCurrentModifiersSong(settings.modifiersSong ? settings.modifiersSong[modifiersSongIndex] : "originalSong");
 
     // get random tempo modifier
     let modifiersTempoIndex = 0;
@@ -75,9 +79,7 @@ const GamePage = () => {
         modifiersTempoIndex = Math.floor(Math.random() * settings.modifiersTempo.length);
       }
     }
-    const modifiersTempoStr = settings.modifiersTempo ? settings.modifiersTempo[modifiersTempoIndex] : "originalTempo";
-
-    setCurrentModifiers([modifiersSongStr, modifiersTempoStr]);
+    setCurrentModifiersTempo(settings.modifiersTempo ? settings.modifiersTempo[modifiersTempoIndex] : "originalTempo");
   }
 
   // prevent useEffect from triggering twice
@@ -115,19 +117,22 @@ const GamePage = () => {
           className={"border-2 border-white rounded-lg py-2 px-8 text-2xl mx-2 text-white bg-primary hover:underline"}
         >End Game</Link>
       </div>
-      <div className="flex items-center justify-center bg-black h-4/6 w-4/5">
-        <div>{currentSong}</div>
-        <div>{settings.duration}</div>
-        <div>{currentPlayFrom}</div>
-        <div>{currentModifiers}</div>
+      <div className="flex flex-col items-center justify-center h-4/6 w-4/5">
+        <div className="text-4xl font-bold">{currentSongName}</div>
+        <div className="text-2xl">{currentSongArtist}</div>
+        <div className="flex flox-row mt-4">
+          {currentPlayFrom && <SettingLabel>{currentPlayFrom}</SettingLabel>}
+          {currentModifiersSong && <SettingLabel>{currentModifiersSong}</SettingLabel>}
+          {currentModifiersTempo && <SettingLabel>{currentModifiersTempo}</SettingLabel>}
+        </div>
       </div>
       <div className="flex flex-col items-center my-4">
         <div className="flex items-center justify-center mb-2 space-x-28">
           <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-36 h-28">
-            <HiCheck/>
+            <HiCheck />
           </div>
           <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-36 h-28">
-            <HiX/>
+            <HiX />
           </div>
         </div>
         <div className="flex items-center justify-center border-2 border-white rounded-lg w-24 h-10">

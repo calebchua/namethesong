@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import { userAuthorization } from "../api/spotifyAPI";
 
 import { FaSpotify } from "react-icons/fa";
