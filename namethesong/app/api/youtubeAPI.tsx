@@ -16,10 +16,12 @@ export const initializeYoutubeApi = async () => {
 };
 
 // call search on the YouTube API to get video given query
-export const searchVideo = async (query: string) => {
+export const searchVideo = async (query: string, type: string) => {
   try {
-    const result = await api.search(query, "video");
-    return result.content[0].videoId;
+    const result = await api.search(query, type);
+    const id = result.content[0].videoId;
+    const duration = result.content[0].duration;
+    return { id, duration };
   }
   catch (error) {
     console.error("Failed to search for video", error);

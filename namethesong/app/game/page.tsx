@@ -52,7 +52,8 @@ const GamePage = () => {
   const [currentModifiersSong, setCurrentModifiersSong] = useState<string | null>(null); // current modifier for song
   const [currentModifiersTempo, setCurrentModifiersTempo] = useState<string | null>(null); // current modifiers for tempo
   const [songConfigured, setSongConfigured] = useState<boolean>(false); // keeps track if all song states have been configured
-  const [songQuery, setSongQuery] = useState<string>("");
+  const [songId, setSongId] = useState<string | null>(null); // id of song
+  const [songDuration, setSongDuration] = useState<number | null>(null); // duration of song
 
   // configures current round of game, sets random song and random combination of selected settings to corresponding states
   const configureSong = () => {
@@ -85,27 +86,17 @@ const GamePage = () => {
       }
     }
     setCurrentModifiersSong(settings.modifiersSong ? settings.modifiersSong[modifiersSongIndex] : "originalSong");
-  }
 
-  // continue configuration once currentModifiersSong has been set
-  useEffect(() => {
-    if (currentModifiersSong != null) {
-      if (currentModifiersSong == "originalSong" || currentModifiersSong == "instrumental") {
-        // get random tempo modifier
-        let modifiersTempoIndex = 0;
-        if (settings.modifiersTempo) {
-          if (settings.modifiersTempo.length > 1) {
-            modifiersTempoIndex = Math.floor(Math.random() * settings.modifiersTempo.length);
-          }
-        }
-        setCurrentModifiersTempo(settings.modifiersTempo ? settings.modifiersTempo[modifiersTempoIndex] : "originalTempo");
+    // get random tempo modifier
+    let modifiersTempoIndex = 0;
+    if (settings.modifiersTempo) {
+      if (settings.modifiersTempo.length > 1) {
+        modifiersTempoIndex = Math.floor(Math.random() * settings.modifiersTempo.length);
       }
-      else {
-        setCurrentModifiersTempo("originalTempo");
-      }
-      setSongConfigured(true);
     }
-  }, [currentModifiersSong]);
+    setCurrentModifiersTempo(settings.modifiersTempo ? settings.modifiersTempo[modifiersTempoIndex] : "originalTempo");
+    setSongConfigured(true);
+  }
 
   // prevent useEffect from triggering twice
   const effectRan = useRef(false);
@@ -137,19 +128,34 @@ const GamePage = () => {
     }
   }, [data]);
 
-  // creates Youtube song search query once song has been configured and states have been set
+  // creates Youtube song search query once song has been configured and states have been set, searches for song's video id
   useEffect(() => {
+    const createQueryAndSearch = async () => {
+      let query = currentSongName + " " + currentSongArtist + " " + currentModifiersSong;
+      if (currentModifiersSong == "originalSong") {
+        query+= " " + currentModifiersTempo;
+      }
+      query = query.replace("originalSong", "").replace("originalTempo", "").replace("slowedDown", "slowed").replace("spedUp", "sped up").replace("piano", "piano cover").replace("guitar", "guitar cover");
+      let result;
+      if (currentModifiersSong == "originalSong" && currentModifiersTempo == "originalTempo") {
+        result = await searchVideo(query, "song");
+      }
+      else {
+        result = await searchVideo(query, "video");
+      }
+      setSongId(result.id);
+      setSongDuration(result.duration);
+    }
     if (songConfigured) {
-      let query = currentSongName + " " + currentSongArtist + " " + currentModifiersSong + " " + currentModifiersTempo;
-      query = query.replace("originalSong", "").replace("originalTempo", "").replace("slowedDown", "slowed").replace("spedUp", "sped up");
-      setSongQuery(query);
+      createQueryAndSearch();
+      setSongConfigured(false);
     }
   }, [songConfigured]);
 
   // loads next song once songNumber has been incremented
   useEffect(() => {
     if (songNumber != 0) {
-      setSongConfigured(false);
+      setSongId(null);
       configureSong();
     }
   }, [songNumber]);
@@ -165,7 +171,7 @@ const GamePage = () => {
           className={"border-2 border-white rounded-lg py-2 px-8 text-2xl mx-2 text-white bg-primary hover:underline"}
         >End Game</Link>
       </div>
-      {songQuery ? (
+      {songId ? (
         <div className="flex flex-col items-center justify-center h-4/6 w-4/5">
           <div className="text-4xl font-bold">{currentSongName}</div>
           <div className="text-2xl">{currentSongArtist}</div>
@@ -175,7 +181,14 @@ const GamePage = () => {
             {currentModifiersTempo && <SettingLabel>{currentModifiersTempo}</SettingLabel>}
           </div>
           <div className="mt-2 text-3xl font-bold">
-            <YoutubePlayer query={songQuery} duration={settings.duration} playFrom={currentPlayFrom} />
+            <YoutubePlayer 
+              songId={songId}
+              songDuration={songDuration}
+              duration={settings.duration}
+              playFrom={currentPlayFrom}
+              modifiersSong={currentModifiersSong}
+              modifiersTempo={currentModifiersTempo}
+            />
           </div>
         </div>
       ) : (
