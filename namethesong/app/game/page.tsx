@@ -5,6 +5,7 @@ import { getAllTracks } from "../api/spotifyAPI";
 import { shuffle } from "../utils";
 import Link from "next/link";
 import SettingLabel from "../components/SettingLabel";
+import { initializeYoutubeApi, searchVideo } from "../api/youtubeAPI";
 
 import { HiCheck } from "react-icons/hi";
 import { HiX } from "react-icons/hi";
@@ -93,7 +94,12 @@ const GamePage = () => {
         fetchedTracks = await shuffle(fetchedTracks);
         setData(fetchedTracks);
       }
+      const initialize = async () => {
+        await initializeYoutubeApi();
+      }
+
       getData();
+      initialize();
     }
     return () => {
       effectRan.current = true;
