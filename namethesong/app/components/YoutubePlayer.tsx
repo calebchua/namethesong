@@ -95,7 +95,33 @@ const YoutubePlayer: React.FC<Props> = ({ songId, songDuration, duration, playFr
     },
   };
 
-  // BUTTON FUNCTIONALITY
+  // another duration seconds button (just a play button)
+  const anotherPlay = () => {
+    if (playerRef.current) {
+      playerRef.current.playVideo();
+    }
+  }
+
+  // allow for play/pause button
+  const playPause = () => {
+    if (playerRef.current) {
+      if (playerRef.current.getPlayerState() == 1) {
+        playerRef.current.pauseVideo();
+      } else {
+        playerRef.current.playVideo();
+      }
+    }
+  }
+
+  // hear again button
+  const hearAgain = () => {
+    // calculate time from startTime to where video currently is
+    // set playback timeout duration to calculated time
+    // move video back to startTime
+    // play video (should play up until where the video was before clicking button)
+  }
+
+  // add popup confirmation for end game
 
   return (
     <div className="flex flex-col items-center">
@@ -105,13 +131,21 @@ const YoutubePlayer: React.FC<Props> = ({ songId, songDuration, duration, playFr
         >
           Hear Again
         </button>
-        {duration != -1 && 
+        {duration != -1 ? ( 
           <button
-            className="mt-2 text-2xl border-2 border-white rounded-md bg-white text-primary font-bold w-72 h-12 hover:underline"
+            className="mt-2 text-2xl border-2 border-white rounded-md bg-white text-primary font-bold w-60 h-12 hover:underline"
+            onClick={anotherPlay}
           >
             Another {duration} {duration == 1 ? "Second" : "Seconds"}
           </button>
-        }
+        ) : (
+          <button
+            className="mt-2 text-2xl border-2 border-white rounded-md bg-white text-primary font-bold w-60 h-12 hover:underline"
+            onClick={playPause}
+          >
+            Play/Pause
+          </button>
+        )}
       </div>
     </div>
   )

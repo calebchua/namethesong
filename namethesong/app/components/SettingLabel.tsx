@@ -14,7 +14,7 @@ function convertText(text: any) {
 
 const SettingLabel: React.FC<Props> = ({ children }) => {
   return (
-    <div className="border-2 border-white rounded-3xl px-4 text-md mx-1">
+    <div className="border-2 border-white rounded-3xl px-4 text-lg mx-1">
       {convertText(children)}
     </div>
   )

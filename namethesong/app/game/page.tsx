@@ -195,9 +195,9 @@ const GamePage = () => {
         <div className="flex flex-col items-center justify-center h-4/6 w-4/5 mt-2 text-3xl font-bold animate-pulse">Loading Song...</div>
       )}
       <div className="flex flex-col items-center my-4">
-        <div className="flex items-center justify-center mb-2 space-x-28">
+        <div className="flex items-center justify-center mb-2 space-x-4">
           <div
-            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-36 h-28 hover:cursor-pointer"
+            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-60 h-28 hover:cursor-pointer"
             onClick={() => {
               setSongNumber(songNumber + 1);
               setSongsCorrect(songsCorrect + 1);
@@ -206,7 +206,7 @@ const GamePage = () => {
             <HiCheck />
           </div>
           <div
-            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-36 h-28 hover:cursor-pointer"
+            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-60 h-28 hover:cursor-pointer"
             onClick={() => {
               setSongNumber(songNumber + 1);
             }}
