@@ -6,6 +6,7 @@ import { shuffle } from "../utils";
 import Link from "next/link";
 import SettingLabel from "../components/SettingLabel";
 import { initializeYoutubeApi, searchVideo } from "../api/youtubeAPI";
+import YoutubePlayer from "../components/YoutubePlayer";
 
 import { HiCheck } from "react-icons/hi";
 import { HiX } from "react-icons/hi";
@@ -19,6 +20,7 @@ interface Settings {
   modifiersTempo: string[] | undefined;
 }
 
+// Spotify playlist item interface
 interface Item {
   track: {
     artists: [{ name: string }]
@@ -27,6 +29,7 @@ interface Item {
 }
 
 const GamePage = () => {
+  // playlist data from Spotify
   const [data, setData] = useState<Array<Item>>([]);
 
   // variables parsed from url
@@ -42,16 +45,26 @@ const GamePage = () => {
   // states to maintain game
   const [songNumber, setSongNumber] = useState<number>(0); // current song number
   const [songsCorrect, setSongsCorrect] = useState<number>(0); // correct songs count
+  const [songsSkipped, setSongsSkipped] = useState<number>(0); // number of songs skipped
   const [currentSongName, setCurrentSongName] = useState<string | null>(null); // current song playing
   const [currentSongArtist, setCurrentSongArtist] = useState<string | null>(null); // current song playing
   const [currentPlayFrom, setCurrentPlayFrom] = useState<string | null>(null); // current setting for playFrom
   const [currentModifiersSong, setCurrentModifiersSong] = useState<string | null>(null); // current modifier for song
   const [currentModifiersTempo, setCurrentModifiersTempo] = useState<string | null>(null); // current modifiers for tempo
+  const [songConfigured, setSongConfigured] = useState<boolean>(false); // keeps track if all song states have been configured
+  const [songQuery, setSongQuery] = useState<string>("");
 
   // configures current round of game, sets random song and random combination of selected settings to corresponding states
   const configureSong = () => {
+    setCurrentModifiersSong(null);
     // set song name + artist as string
-    const curr = data[songNumber];
+    let curr;
+    if (songNumber < data.length) {
+      curr = data[songNumber];
+    }
+    else {
+      curr = data[Math.floor(Math.random() * data.length)]
+    }
     setCurrentSongName(curr.track.name);
     setCurrentSongArtist(curr.track.artists[0].name);
 
@@ -72,16 +85,27 @@ const GamePage = () => {
       }
     }
     setCurrentModifiersSong(settings.modifiersSong ? settings.modifiersSong[modifiersSongIndex] : "originalSong");
-
-    // get random tempo modifier
-    let modifiersTempoIndex = 0;
-    if (settings.modifiersTempo) {
-      if (settings.modifiersTempo.length > 1) {
-        modifiersTempoIndex = Math.floor(Math.random() * settings.modifiersTempo.length);
-      }
-    }
-    setCurrentModifiersTempo(settings.modifiersTempo ? settings.modifiersTempo[modifiersTempoIndex] : "originalTempo");
   }
+
+  // continue configuration once currentModifiersSong has been set
+  useEffect(() => {
+    if (currentModifiersSong != null) {
+      if (currentModifiersSong == "originalSong" || currentModifiersSong == "instrumental") {
+        // get random tempo modifier
+        let modifiersTempoIndex = 0;
+        if (settings.modifiersTempo) {
+          if (settings.modifiersTempo.length > 1) {
+            modifiersTempoIndex = Math.floor(Math.random() * settings.modifiersTempo.length);
+          }
+        }
+        setCurrentModifiersTempo(settings.modifiersTempo ? settings.modifiersTempo[modifiersTempoIndex] : "originalTempo");
+      }
+      else {
+        setCurrentModifiersTempo("originalTempo");
+      }
+      setSongConfigured(true);
+    }
+  }, [currentModifiersSong]);
 
   // prevent useEffect from triggering twice
   const effectRan = useRef(false);
@@ -106,16 +130,34 @@ const GamePage = () => {
     }
   }, []);
 
+  // wait until playlist data has been loaded before attempting to configure song
   useEffect(() => {
     if (data.length > 0) {
       configureSong();
     }
-  }, [data])
+  }, [data]);
+
+  // creates Youtube song search query once song has been configured and states have been set
+  useEffect(() => {
+    if (songConfigured) {
+      let query = currentSongName + " " + currentSongArtist + " " + currentModifiersSong + " " + currentModifiersTempo;
+      query = query.replace("originalSong", "").replace("originalTempo", "").replace("slowedDown", "slowed").replace("spedUp", "sped up");
+      setSongQuery(query);
+    }
+  }, [songConfigured]);
+
+  // loads next song once songNumber has been incremented
+  useEffect(() => {
+    if (songNumber != 0) {
+      setSongConfigured(false);
+      configureSong();
+    }
+  }, [songNumber]);
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <div className="inline-flex justify-between w-11/12 items-center mb-4 mt-4">
-        <div className="text-5xl font-bold">Score: {songsCorrect} / {songNumber}</div>
+        <div className="text-5xl font-bold">Score: &nbsp;{songsCorrect} / {songNumber - songsSkipped}</div>
         <Link
           href={{
             pathname: "/finishgame"
@@ -123,25 +165,49 @@ const GamePage = () => {
           className={"border-2 border-white rounded-lg py-2 px-8 text-2xl mx-2 text-white bg-primary hover:underline"}
         >End Game</Link>
       </div>
-      <div className="flex flex-col items-center justify-center h-4/6 w-4/5">
-        <div className="text-4xl font-bold">{currentSongName}</div>
-        <div className="text-2xl">{currentSongArtist}</div>
-        <div className="flex flox-row mt-4">
-          {currentPlayFrom && <SettingLabel>{currentPlayFrom}</SettingLabel>}
-          {currentModifiersSong && <SettingLabel>{currentModifiersSong}</SettingLabel>}
-          {currentModifiersTempo && <SettingLabel>{currentModifiersTempo}</SettingLabel>}
+      {songQuery ? (
+        <div className="flex flex-col items-center justify-center h-4/6 w-4/5">
+          <div className="text-4xl font-bold">{currentSongName}</div>
+          <div className="text-2xl">{currentSongArtist}</div>
+          <div className="flex flox-row">
+            {currentPlayFrom && <SettingLabel>{currentPlayFrom}</SettingLabel>}
+            {currentModifiersSong && <SettingLabel>{currentModifiersSong}</SettingLabel>}
+            {currentModifiersTempo && <SettingLabel>{currentModifiersTempo}</SettingLabel>}
+          </div>
+          <div className="mt-2 text-3xl font-bold">
+            <YoutubePlayer query={songQuery} duration={settings.duration} playFrom={currentPlayFrom} />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-4/6 w-4/5 mt-2 text-3xl font-bold animate-pulse">Loading Song...</div>
+      )}
       <div className="flex flex-col items-center my-4">
         <div className="flex items-center justify-center mb-2 space-x-28">
-          <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-36 h-28">
+          <div
+            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-36 h-28 hover:cursor-pointer"
+            onClick={() => {
+              setSongNumber(songNumber + 1);
+              setSongsCorrect(songsCorrect + 1);
+            }}
+          >
             <HiCheck />
           </div>
-          <div className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-36 h-28">
+          <div
+            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-36 h-28 hover:cursor-pointer"
+            onClick={() => {
+              setSongNumber(songNumber + 1);
+            }}
+          >
             <HiX />
           </div>
         </div>
-        <div className="flex items-center justify-center border-2 border-white rounded-lg w-24 h-10">
+        <div
+          className="flex items-center justify-center border-2 border-white rounded-lg w-24 h-10 hover:cursor-pointer hover:underline"
+          onClick={() => {
+            setSongNumber(songNumber + 1);
+            setSongsSkipped(songsSkipped + 1);
+          }}
+        >
           <div className="text-2xl mr-1">
             skip
           </div>
