@@ -34,17 +34,30 @@ const CreateGamePage = () => {
   // get code returned from Spotify login in URL
   const code: string | null = useSearchParams().get('code');
 
+  // Spotify token if already authenticated
+  const token: string | null = useSearchParams().get("token");
+  const prevLoggedIn: string | null = useSearchParams().get("loggedIn");
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
   // prevent useEffect from triggering twice
   const effectRan = useRef(false);
 
   // detect when a code is returned from Spotify in URL and get playlists
   useEffect(() => {
+    // window.history.replaceState({}, document.title, '/creategame');
     if (effectRan.current === false) {
-      const setToken = async () => {
-        let token = await getSpotifyToken(code);
-        if (token) setAccessToken(token);
+      if (prevLoggedIn == "true") {
+        setAccessToken(token);
+        setLoggedIn(true);
       }
-      setToken();
+      else {
+        const setToken = async () => {
+          let result = await getSpotifyToken(code);
+          if (result) setAccessToken(result.token);
+          if (result) setLoggedIn(result.user);
+        }
+        setToken();
+      }
     }
 
     return () => {
@@ -79,13 +92,13 @@ const CreateGamePage = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <div className="mb-6 space-y-4">
-        <div className="text-7xl font-bold text-center mb-10">Create Game</div>
+        <div className="text-7xl font-bold text-center mb-10">Create Game //width</div>
         <div className="flex justify-center">
-          <SpotifyLoginButton loggedIn={code != null} />
+          <SpotifyLoginButton loggedIn={loggedIn} />
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-3xl font-bold">Choose Playlist:</div>
-          <Dropdown token={accessToken} loggedIn={code != null} handleChange={setSelectedPlaylist} />
+          <Dropdown token={accessToken} loggedIn={loggedIn} handleChange={setSelectedPlaylist} />
         </div>
       </div>
       <div className="w-4/5 border-2 border-white"></div>
@@ -153,6 +166,7 @@ const CreateGamePage = () => {
           href={verifySelection() ? {
             pathname: "/game",
             query: {
+              loggedIn: loggedIn,
               token: accessToken,
               playlistId: selectedPlaylist,
               duration: duration,
@@ -162,8 +176,8 @@ const CreateGamePage = () => {
             }
           } : {}}
           className={verifySelection() ?
-            "border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl"
-            : "border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white"}
+            "border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
+            : "border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white hover:cursor-default"}
         >Start Game</Link>
       </div>
     </div>

@@ -2,12 +2,25 @@
 
 // AUTH API FUNCTIONS
 
+// token return object interface
+interface ReturnObject {
+  token: string | null;
+  user: boolean;
+}
+
 // function used externally to get token, handles whether or not auth is clientCredential or normal Authorization
-export const getSpotifyToken = async (code: string | null): Promise<string | null> => {
+export const getSpotifyToken = async (code: string | null): Promise<ReturnObject | null> => {
+  let token: string | null;
+  let user: boolean;
   if (code) {
-    return getAuthorizationCodeToken(code); // may not be working
+    token = await getAuthorizationCodeToken(code);
+    user = true;
   }
-  return getClientCredentialToken();
+  else {
+    token = await getClientCredentialToken();
+    user = false;
+  }
+  return { token, user };
 }
 
 // gets access token without user authorization, cannot access user specific info (ex. profile, playlists)

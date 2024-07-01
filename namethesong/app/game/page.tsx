@@ -33,6 +33,7 @@ const GamePage = () => {
   const [data, setData] = useState<Array<Item>>([]);
 
   // variables parsed from url
+  const loggedIn: string | null = useSearchParams().get("loggedIn"); // is user logged in
   const spotifyToken: string | null = useSearchParams().get("token"); // Spotify auth token
   const playlistId: string | null = useSearchParams().get("playlistId"); // playlist id
   const settings: Settings = { // settings object
@@ -166,21 +167,27 @@ const GamePage = () => {
         <div className="text-5xl font-bold">Score: &nbsp;{songsCorrect} / {songNumber - songsSkipped}</div>
         <Link
           href={{
-            pathname: "/finishgame"
+            pathname: "/finishgame",
+            query: {
+              loggedIn: loggedIn,
+              token: spotifyToken,
+              correct: songsCorrect,
+              total: songNumber-songsSkipped,
+            }
           }}
-          className={"border-2 border-white rounded-lg py-2 px-8 text-2xl mx-2 text-white bg-primary hover:underline"}
+          className={"border-2 border-white rounded-lg py-2 px-8 text-2xl mx-2 text-white bg-primary hover:underline active:opacity-80"}
         >End Game</Link>
       </div>
       {songId ? (
         <div className="flex flex-col items-center justify-center h-4/6 w-4/5">
-          <div className="text-4xl font-bold">{currentSongName}</div>
-          <div className="text-2xl">{currentSongArtist}</div>
+          <div className="text-5xl font-bold">{currentSongName}</div>
+          <div className="text-3xl mb-2">{currentSongArtist}</div>
           <div className="flex flox-row">
             {currentPlayFrom && <SettingLabel>{currentPlayFrom}</SettingLabel>}
             {currentModifiersSong && <SettingLabel>{currentModifiersSong}</SettingLabel>}
             {currentModifiersTempo && <SettingLabel>{currentModifiersTempo}</SettingLabel>}
           </div>
-          <div className="mt-2 text-3xl font-bold">
+          <div className="mt-4 text-3xl font-bold">
             <YoutubePlayer 
               songId={songId}
               songDuration={songDuration}
@@ -197,28 +204,34 @@ const GamePage = () => {
       <div className="flex flex-col items-center my-4">
         <div className="flex items-center justify-center mb-2 space-x-4">
           <div
-            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-60 h-28 hover:cursor-pointer"
+            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-64 h-28 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
             onClick={() => {
-              setSongNumber(songNumber + 1);
-              setSongsCorrect(songsCorrect + 1);
+              if (songId) {
+                setSongNumber(songNumber + 1);
+                setSongsCorrect(songsCorrect + 1);
+              }
             }}
           >
             <HiCheck />
           </div>
           <div
-            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-60 h-28 hover:cursor-pointer"
+            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-64 h-28 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
             onClick={() => {
-              setSongNumber(songNumber + 1);
+              if (songId) {
+                setSongNumber(songNumber + 1);
+              }
             }}
           >
             <HiX />
           </div>
         </div>
         <div
-          className="flex items-center justify-center border-2 border-white rounded-lg w-24 h-10 hover:cursor-pointer hover:underline"
+          className="flex items-center justify-center border-2 border-white rounded-lg w-24 h-10 hover:cursor-pointer hover:underline active:opacity-80"
           onClick={() => {
-            setSongNumber(songNumber + 1);
-            setSongsSkipped(songsSkipped + 1);
+            if (songId) {
+              setSongNumber(songNumber + 1);
+              setSongsSkipped(songsSkipped + 1);
+            }
           }}
         >
           <div className="text-2xl mr-1">

@@ -14,6 +14,7 @@ interface Props {
 
 const YoutubePlayer: React.FC<Props> = ({ songId, songDuration, duration, playFrom, modifiersSong, modifiersTempo }) => {
   const playerRef = useRef<YouTubePlayer | null>(null); // ref to hold the YouTube player
+  const originalDuration = duration;
   let timeout: NodeJS.Timeout | null = null; // used to keep track of duration
 
   // configures player to the custom settings of the current round
@@ -97,12 +98,13 @@ const YoutubePlayer: React.FC<Props> = ({ songId, songDuration, duration, playFr
 
   // another duration seconds button (just a play button)
   const anotherPlay = () => {
+    duration = originalDuration;
     if (playerRef.current) {
       playerRef.current.playVideo();
     }
   }
 
-  // allow for play/pause button
+  // allow for play/pause functionality through external button
   const playPause = () => {
     if (playerRef.current) {
       if (playerRef.current.getPlayerState() == 1) {
@@ -113,34 +115,40 @@ const YoutubePlayer: React.FC<Props> = ({ songId, songDuration, duration, playFr
     }
   }
 
-  // hear again button
+  // goes back to where the song originally started and plays up until current point
   const hearAgain = () => {
-    // calculate time from startTime to where video currently is
-    // set playback timeout duration to calculated time
-    // move video back to startTime
-    // play video (should play up until where the video was before clicking button)
+    if (playerRef.current) {
+      duration = playerRef.current.getCurrentTime() - startTime;
+      playerRef.current.seekTo(startTime);
+      playerRef.current.playVideo();
+    }
   }
 
   // add popup confirmation for end game
+
+
+  const buttonClass = "mt-2 text-2xl border-2 border-white rounded-md bg-white text-primary font-bold w-64 h-12 hover:underline active:bg-gray-200 active:border-gray-200";
 
   return (
     <div className="flex flex-col items-center">
       <YouTube videoId={songId} opts={opts} onReady={onPlayerReady} onStateChange={onPlayerStateChange}/>
       <div className="flex flex-row space-x-4">
-        <button className="mt-2 text-2xl border-2 border-white rounded-md bg-white text-primary font-bold w-60 h-12 hover:underline"
+        <button 
+          className={buttonClass}
+          onClick={hearAgain}
         >
           Hear Again
         </button>
         {duration != -1 ? ( 
           <button
-            className="mt-2 text-2xl border-2 border-white rounded-md bg-white text-primary font-bold w-60 h-12 hover:underline"
+            className={buttonClass}
             onClick={anotherPlay}
           >
             Another {duration} {duration == 1 ? "Second" : "Seconds"}
           </button>
         ) : (
           <button
-            className="mt-2 text-2xl border-2 border-white rounded-md bg-white text-primary font-bold w-60 h-12 hover:underline"
+            className={buttonClass}
             onClick={playPause}
           >
             Play/Pause
