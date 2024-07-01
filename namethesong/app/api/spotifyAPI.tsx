@@ -57,7 +57,7 @@ export const getAuthorizationCodeToken = async (urlCode: string): Promise<string
       },
       body: new URLSearchParams({
         code: urlCode,
-        redirect_uri: "http://localhost:3000/creategame", // modify this if hosting
+        redirect_uri: process.env.URL + "/creategame",
         grant_type: "authorization_code"
       })
     });
@@ -71,7 +71,7 @@ export const getAuthorizationCodeToken = async (urlCode: string): Promise<string
 
 // generates link to redirect users to Spotify login page
 export const userAuthorization = async () => {
-  const redirectURI = "http://localhost:3000/creategame"; // modify here if hosting
+  const redirectURI = process.env.URL + "/creategame";
   const scope = "playlist-read-private%20playlist-read-collaborative";
   const state = generateRandomString(16);
   const authArgs = "client_id=" + process.env.CLIENT_ID + "&response_type=code" + "&redirect_uri=" + redirectURI + "&scope=" + scope + "&state=" + state;

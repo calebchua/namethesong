@@ -44,7 +44,6 @@ const CreateGamePage = () => {
 
   // detect when a code is returned from Spotify in URL and get playlists
   useEffect(() => {
-    // window.history.replaceState({}, document.title, '/creategame');
     if (effectRan.current === false) {
       if (prevLoggedIn == "true") {
         setAccessToken(token);
