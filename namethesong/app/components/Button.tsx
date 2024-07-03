@@ -14,8 +14,8 @@ const Button: React.FC<Props> = ({ children, changeSelect, selected }) => {
   return (
     <button
       onClick={changeSelect}
-      className= {!isSelected ? "border-2 border-white rounded-md py-2 px-4 text-xl mx-2 hover:underline" 
-      : "bg-white text-primary border-2 border-white rounded-md py-2 px-4 text-xl mx-2 hover:underline"}
+      className= {!isSelected ? "border-2 border-secondary rounded-md py-2 px-4 text-xl mx-2 hover:underline" 
+      : "bg-secondary text-primary border-2 border-secondary rounded-md py-2 px-4 text-xl mx-2 hover:underline"}
     >
       {children}
     </button>

@@ -21,7 +21,7 @@ const FinishGamePage = () => {
             token: token,
           }
         }}
-        className="mt-8 mb-8 border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
+        className="mt-8 mb-8 border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
       >New Game</Link>
     </div>
   )

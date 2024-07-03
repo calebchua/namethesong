@@ -9,7 +9,10 @@ export default function Home() {
           <HiMusicNote className="text-9xl" />
           <div className="text-7xl font-bold">Name the Song</div>
         </div>
-        <Link href="/creategame" className="text-7xl bg-white font-bold text-primary border-4 border-white rounded-2xl px-8 py-6">Create Game</Link>
+        <Link href="/creategame" className="text-7xl bg-secondary font-bold text-primary border-4 border-secondary rounded-2xl px-8 py-6 active:bg-gray-200 active:border-gray-200"
+        >
+          Create Game
+        </Link>
       </div>
     </main>
   );

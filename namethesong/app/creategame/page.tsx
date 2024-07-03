@@ -91,16 +91,16 @@ const CreateGamePage = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <div className="mb-6 space-y-4">
-        <div className="text-7xl font-bold text-center mb-10">Create Game //width</div>
+        <div className="text-7xl font-bold text-center mb-10">Create Game</div>
         <div className="flex justify-center">
           <SpotifyLoginButton loggedIn={loggedIn} />
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-center space-x-4">
           <div className="text-3xl font-bold">Choose Playlist:</div>
           <Dropdown token={accessToken} loggedIn={loggedIn} handleChange={setSelectedPlaylist} />
         </div>
       </div>
-      <div className="w-4/5 border-2 border-white"></div>
+      <div className="w-4/5 border-2 border-secondary"></div>
       <div className="w-4/5 mt-4 mb-12 space-y-4">
         <div className="space-y-2">
           <div className="text-3xl">Max Song Duration:</div>
@@ -175,8 +175,8 @@ const CreateGamePage = () => {
             }
           } : {}}
           className={verifySelection() ?
-            "border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
-            : "border-2 border-white rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-white hover:cursor-default"}
+            "border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
+            : "border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary hover:cursor-default"}
         >Start Game</Link>
       </div>
     </div>

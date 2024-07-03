@@ -127,7 +127,7 @@ const YoutubePlayer: React.FC<Props> = ({ songId, songDuration, duration, playFr
   // add popup confirmation for end game
 
 
-  const buttonClass = "mt-2 text-2xl border-2 border-white rounded-md bg-white text-primary font-bold w-64 h-12 hover:underline active:bg-gray-200 active:border-gray-200";
+  const buttonClass = "mt-2 text-2xl border-2 border-secondary rounded-md bg-secondary text-primary font-bold w-64 h-12 hover:underline active:bg-gray-200 active:border-gray-200";
 
   return (
     <div className="flex flex-col items-center">

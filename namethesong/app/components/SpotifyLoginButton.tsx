@@ -16,7 +16,7 @@ const SpotifyLoginButton: React.FC<Props> = ({ loggedIn }) => {
 
   return (
     <button 
-      className="flex items-center bg-spotify border-white border-2 rounded-3xl py-2 px-6 text-2xl mx-2 hover:shadow-md"
+      className="flex items-center bg-spotify border-secondary border-2 rounded-3xl py-2 px-6 text-2xl mx-2 hover:shadow-md"
       onClick={authUser}
     >
       <FaSpotify className="mr-2 text-3xl"/>

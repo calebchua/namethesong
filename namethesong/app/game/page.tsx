@@ -175,7 +175,7 @@ const GamePage = () => {
               total: songNumber-songsSkipped,
             }
           }}
-          className={"border-2 border-white rounded-lg py-2 px-8 text-2xl mx-2 text-white bg-primary hover:underline active:opacity-80"}
+          className={"border-2 border-secondary rounded-lg py-2 px-8 text-2xl mx-2 text-secondary bg-primary hover:underline active:opacity-80"}
         >End Game</Link>
       </div>
       {songId ? (
@@ -204,7 +204,7 @@ const GamePage = () => {
       <div className="flex flex-col items-center my-4">
         <div className="flex items-center justify-center mb-2 space-x-4">
           <div
-            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-64 h-28 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
+            className="flex items-center justify-center font-bold border-4 border-secondary rounded-lg bg-secondary text-primary text-8xl w-64 h-28 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
             onClick={() => {
               if (songId) {
                 setSongNumber(songNumber + 1);
@@ -215,7 +215,7 @@ const GamePage = () => {
             <HiCheck />
           </div>
           <div
-            className="flex items-center justify-center font-bold border-4 border-white rounded-lg bg-white text-primary text-8xl w-64 h-28 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
+            className="flex items-center justify-center font-bold border-4 border-secondary rounded-lg bg-secondary text-primary text-8xl w-64 h-28 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
             onClick={() => {
               if (songId) {
                 setSongNumber(songNumber + 1);
@@ -226,7 +226,7 @@ const GamePage = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-center border-2 border-white rounded-lg w-24 h-10 hover:cursor-pointer hover:underline active:opacity-80"
+          className="flex items-center justify-center border-2 border-secondary rounded-lg w-24 h-10 hover:cursor-pointer hover:underline active:opacity-80"
           onClick={() => {
             if (songId) {
               setSongNumber(songNumber + 1);
