@@ -6,7 +6,6 @@ import { getSpotifyToken } from "../api/spotifyAPI";
 import SpotifyLoginButton from "../components/SpotifyLoginButton";
 import Dropdown from "../components/Dropdown";
 import { useSearchParams } from "next/navigation";
-import {Tooltip} from "@nextui-org/tooltip";
 
 const CreateGamePage = () => {
   // states to keep track of selected custom settings
@@ -162,31 +161,7 @@ const CreateGamePage = () => {
         </div>
       </div>
       <div className="mb-4">
-        {verifySelection() ? (
-          <Link
-          href={{
-            pathname: "/game",
-            query: {
-              loggedIn: loggedIn,
-              token: accessToken,
-              playlistId: selectedPlaylist,
-              duration: duration,
-              playFrom: parseState(playFrom),
-              modifiersSong: parseState(modifiersSong),
-              modifiersTempo: parseState(modifiersTempo)
-            }
-          }}
-          className="border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
-          >Start Game</Link>
-        ) : (
-          <Tooltip showArrow={true} closeDelay={0} offset={-1} content="Select at least one option in each row">
-            <button className="border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary hover:cursor-default"
-            >
-              Start Game
-            </button>
-          </Tooltip>
-        )}
-        {/* <Link
+        <Link
           href={verifySelection() ? {
             pathname: "/game",
             query: {
@@ -202,7 +177,7 @@ const CreateGamePage = () => {
           className={verifySelection() ?
             "border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
             : "border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary hover:cursor-default"}
-        >Start Game</Link> */}
+        >Start Game</Link>
       </div>
     </div>
   )
