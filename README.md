@@ -43,7 +43,7 @@ npm run dev
 Have fun! :)
 
 #### Note: if you want other users to be able to login with their Spotify accounts, you must add them to your "User Management" list
-- Navigate to your Spotify App created in [Step 3 of Set Up](https://github.com/calebchua/namethesong/edit/main/README.md#3-create-a-spotify-developer-account)
+- Navigate to your Spotify App created in Step 3 of Set Up
 - Click Settings
 - Go to the User Management page
 - Add the user's name and email
