@@ -2,6 +2,8 @@
 
 {DESCRIBE PROJECT HERE}
 
+<br/>
+
 ## Set Up
 
 ### 1. Clone repository from Github
@@ -18,7 +20,7 @@ npm i
 - Login to https://developer.spotify.com/
 - Go to "Dashboard" and click "Create App"
 - Fill out required fields
-- Add "{URL}/creategame" as a redirect URI, where {URL} is your localhost URL (ex. ```"http://localhost:3000/creategame")```)
+- Add "{URL}/creategame" as a redirect URI, where {URL} is your localhost URL (ex. ```"http://localhost:3000/creategame"```)
 - Check the "Web API" box
 - Save
 
@@ -34,8 +36,9 @@ CLIENT_ID={YOUR_CLIENT_ID}
 CLIENT_SECRET={YOUR_CLIENT_SECRET}
 URL=http://localhost:3000
 ```
+<br/>
 
-## Running the project
+## Running The Project
 ```
 npm run dev
 ```
