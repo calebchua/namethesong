@@ -1,6 +1,14 @@
-# namethesong
+# Name the Song
 
-{DESCRIBE PROJECT HERE}
+Two player song guessing game!
+
+One player has the device and controls the audio, while the other player attempts to guess the song. The player with the device will mark each guess as correct or incorrect.
+
+There are no rules beyond this (these aren't even really rules, just instructions on how to play), the game is meant to be played however the players like. Features in the game exist to allow for flexibility in the way the game is played.
+
+### Notes on game features:
+- Select as many settings in the Create Game page as you like, songs will be a random combination of all settings selected (only setting that is limited to one selection is Duration)
+- Hear Again button will play from beginning of audio clip to where song currently is, no matter the Duration setting
 
 <br/>
 
@@ -49,4 +57,6 @@ Have fun! :)
 - Navigate to your Spotify App created in Step 3 of Set Up
 - Click Settings
 - Go to the User Management page
-- Add the user's name and email
+- Add the user's name and email (email associated to their Spotify account)
+
+This is required due to Spotify's Developer Mode, read more at https://developer.spotify.com/documentation/web-api/concepts/quota-modes
