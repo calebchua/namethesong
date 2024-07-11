@@ -28,7 +28,10 @@ npm i
 - Login to https://developer.spotify.com/
 - Go to "Dashboard" and click "Create App"
 - Fill out required fields
-- Add "{URL}/creategame" as a redirect URI, where {URL} is your localhost URL (ex. ```"http://localhost:3000/creategame"```) --> this is very important, make sure {URL} is the full URL (including "http..." and not just "localhost:3000")
+- Add "{URL}/creategame" as a redirect URI, where {URL} is your localhost URL (ex. ```"http://localhost:3000/creategame"```)
+
+*this step is very important, make sure {URL} is the full URL (including the "http..." at the beginning of the URL and not just "localhost:3000...")*
+
 - Check the "Web API" box
 - Save
 
@@ -36,7 +39,7 @@ npm i
 Create a ".env.local" file inside "namethesong" directory and add the following variables:
 - "CLIENT_ID": Client ID from your Spotify Developer account
 - "CLIENT_SECRET": Client Secret from your Spotify Developer account
-- "URL": your localhost URL (make sure to NOT include a "/" at the end)
+- "URL": your localhost URL (URL must match what you entered when creating Spotify App, make sure to NOT include a trailing "/" at the end)
 
 Example:
 ```
