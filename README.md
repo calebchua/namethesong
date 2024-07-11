@@ -28,7 +28,7 @@ npm i
 - Login to https://developer.spotify.com/
 - Go to "Dashboard" and click "Create App"
 - Fill out required fields
-- Add "{URL}/creategame" as a redirect URI, where {URL} is your localhost URL (ex. ```"http://localhost:3000/creategame"```)
+- Add "{URL}/creategame" as a redirect URI, where {URL} is your localhost URL (ex. ```"http://localhost:3000/creategame"```) --> this is very important, make sure {URL} is the full URL (including "http..." and not just "localhost:3000")
 - Check the "Web API" box
 - Save
 
