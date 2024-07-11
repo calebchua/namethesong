@@ -36,7 +36,7 @@ npm i
 Create a ".env.local" file inside "namethesong" directory and add the following variables:
 - "CLIENT_ID": Client ID from your Spotify Developer account
 - "CLIENT_SECRET": Client Secret from your Spotify Developer account
-- "URL": your localhost URL
+- "URL": your localhost URL (make sure to NOT include a "/" at the end)
 
 Example:
 ```
