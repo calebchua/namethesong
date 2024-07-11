@@ -1,5 +1,10 @@
 # Name the Song
 
+### Try it here: https://namethesong.vercel.app
+*(Note: you won't be able to login with Spotify account due to Spotify Developer Mode, see below for more)*
+
+<br />
+
 Two player song guessing game!
 
 One player has the device and controls the audio, while the other player attempts to guess the song. The player with the device will mark each guess as correct or incorrect.
