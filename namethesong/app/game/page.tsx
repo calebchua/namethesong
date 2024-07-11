@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from 'next/navigation'
 import { getAllTracks } from "../api/spotifyAPI";
 import { shuffle } from "../utils";
@@ -29,6 +29,14 @@ interface Item {
 }
 
 const GamePage = () => {
+  return (
+    <Suspense>
+      <GameContent />
+    </Suspense>
+  )
+}
+
+const GameContent = () => {
   // playlist data from Spotify
   const [data, setData] = useState<Array<Item>>([]);
 

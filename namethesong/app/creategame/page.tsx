@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Button from "../components/Button";
 import { getSpotifyToken } from "../api/spotifyAPI";
@@ -8,6 +8,14 @@ import Dropdown from "../components/Dropdown";
 import { useSearchParams } from "next/navigation";
 
 const CreateGamePage = () => {
+  return (
+    <Suspense>
+      <CreateGameContent />
+    </Suspense>
+  )
+}
+
+const CreateGameContent = () => {
   // states to keep track of selected custom settings
   const [duration, setDuration] = useState<number | null>(null);
   const [playFrom, setPlayFrom] = useState({

@@ -1,9 +1,17 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 const FinishGamePage = () => {
+  return (
+    <Suspense>
+      <FinishGameContent />
+    </Suspense>
+  )
+}
+
+const FinishGameContent = () => {
   // getting score from query sent by previous page
   const score: string = useSearchParams().get("correct") + "/" + useSearchParams().get("total");
   const loggedIn: string | null = useSearchParams().get("loggedIn");
