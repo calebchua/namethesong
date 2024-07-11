@@ -91,7 +91,7 @@ const CreateGamePage = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <div className="mb-6 space-y-4">
-        <div className="text-7xl font-bold text-center mb-10">Create Game</div>
+        <div className="text-7xl font-bold text-center mb-6">Create Game</div>
         <div className="flex justify-center">
           <SpotifyLoginButton loggedIn={loggedIn} />
         </div>
@@ -161,8 +161,9 @@ const CreateGamePage = () => {
         </div>
       </div>
       <div className="mb-4">
-        <Link
-          href={verifySelection() ? {
+        {verifySelection() ? (
+          <Link
+          href={{
             pathname: "/game",
             query: {
               loggedIn: loggedIn,
@@ -173,11 +174,14 @@ const CreateGamePage = () => {
               modifiersSong: parseState(modifiersSong),
               modifiersTempo: parseState(modifiersTempo)
             }
-          } : {}}
-          className={verifySelection() ?
-            "border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
-            : "border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary hover:cursor-default"}
-        >Start Game</Link>
+          }}
+          className="border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
+          >Start Game</Link>
+        ) : (
+          <div className="text-4xl mx-2 text-secondary">
+            Select a playlist and at least one setting per row
+          </div>
+        )}
       </div>
     </div>
   )

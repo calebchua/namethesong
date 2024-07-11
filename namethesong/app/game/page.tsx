@@ -187,7 +187,7 @@ const GamePage = () => {
             {currentModifiersSong && <SettingLabel>{currentModifiersSong}</SettingLabel>}
             {currentModifiersTempo && <SettingLabel>{currentModifiersTempo}</SettingLabel>}
           </div>
-          <div className="mt-4 text-3xl font-bold">
+          <div className="mt-2 text-3xl font-bold">
             <YoutubePlayer 
               songId={songId}
               songDuration={songDuration}
@@ -199,12 +199,12 @@ const GamePage = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-4/6 w-4/5 mt-2 text-3xl font-bold animate-pulse">Loading Song...</div>
+        <div className="flex flex-col items-center justify-center h-4/6 w-4/5 text-3xl font-bold animate-pulse">Loading Song...</div>
       )}
       <div className="flex flex-col items-center my-4">
         <div className="flex items-center justify-center mb-2 space-x-4">
           <div
-            className="flex items-center justify-center font-bold border-4 border-secondary rounded-lg bg-secondary text-primary text-8xl w-64 h-28 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
+            className="flex items-center justify-center font-bold border-4 border-secondary rounded-lg bg-secondary text-primary text-8xl w-64 h-24 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
             onClick={() => {
               if (songId) {
                 setSongNumber(songNumber + 1);
@@ -215,7 +215,7 @@ const GamePage = () => {
             <HiCheck />
           </div>
           <div
-            className="flex items-center justify-center font-bold border-4 border-secondary rounded-lg bg-secondary text-primary text-8xl w-64 h-28 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
+            className="flex items-center justify-center font-bold border-4 border-secondary rounded-lg bg-secondary text-primary text-8xl w-64 h-24 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
             onClick={() => {
               if (songId) {
                 setSongNumber(songNumber + 1);
