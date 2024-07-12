@@ -1,6 +1,6 @@
 # Name the Song
 
-### Try it here: https://namethesong.vercel.app
+### Try it here: https://namethesong.vercel.app (works on mobile too)
 *(Note: you won't be able to login with Spotify account due to Spotify Developer Mode, see below for more)*
 
 <br />
