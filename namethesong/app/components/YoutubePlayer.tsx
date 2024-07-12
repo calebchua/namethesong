@@ -16,6 +16,7 @@ const YoutubePlayer: React.FC<Props> = ({ songId, songDuration, duration, playFr
   const playerRef = useRef<YouTubePlayer | null>(null); // ref to hold the YouTube player
   const originalDuration = duration;
   let timeout: NodeJS.Timeout | null = null; // used to keep track of duration
+  const isMobile = window.screen.width < 640; // is screen mobile size
 
   // configures player to the custom settings of the current round
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
@@ -87,8 +88,8 @@ const YoutubePlayer: React.FC<Props> = ({ songId, songDuration, duration, playFr
 
   // options props for video player
   const opts: YouTubeProps['opts'] = {
-    height: '351',
-    width: '576',
+    height: isMobile ? '189' : '351',
+    width: isMobile ? '310' : '576',
     playerVars: {
       autoplay: 1,
       rel: 0,
@@ -127,12 +128,12 @@ const YoutubePlayer: React.FC<Props> = ({ songId, songDuration, duration, playFr
   // add popup confirmation for end game
 
 
-  const buttonClass = "mt-2 text-2xl border-2 border-secondary rounded-md bg-secondary text-primary font-bold w-64 h-12 hover:underline active:bg-gray-200 active:border-gray-200";
+  const buttonClass = "mt-2 sm:text-2xl text-md border-2 border-secondary rounded-md bg-secondary text-primary font-bold sm:w-64 w-40 sm:h-12 h-10 hover:underline active:bg-gray-200 active:border-gray-200";
 
   return (
     <div className="flex flex-col items-center">
       <YouTube videoId={songId} opts={opts} onReady={onPlayerReady} onStateChange={onPlayerStateChange}/>
-      <div className="flex flex-row space-x-4">
+      <div className="flex flex-row sm:space-x-4 space-x-2">
         <button 
           className={buttonClass}
           onClick={hearAgain}

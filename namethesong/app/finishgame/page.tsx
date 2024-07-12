@@ -19,8 +19,8 @@ const FinishGameContent = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
-      <div className="text-7xl font-bold mb-8">Results</div>
-      <div className="text-9xl font-bold">{score}</div>
+      <div className="sm:text-7xl text-5xl font-bold mb-8">Results</div>
+      <div className="sm:text-9xl text-7xl font-bold">{score}</div>
       <Link
         href={{
           pathname: "/creategame",

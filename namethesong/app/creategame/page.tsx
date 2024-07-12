@@ -98,21 +98,21 @@ const CreateGameContent = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
-      <div className="mb-6 space-y-4">
-        <div className="text-7xl font-bold text-center mb-6">Create Game</div>
+      <div className="sm:mb-6 mb-4 sm:space-y-4 space-y-2">
+        <div className="sm:text-7xl text-4xl font-bold text-center sm:mb-6 mb-4">Create Game</div>
         <div className="flex justify-center">
           <SpotifyLoginButton loggedIn={loggedIn} />
         </div>
-        <div className="flex items-center justify-center space-x-4">
-          <div className="text-3xl font-bold">Choose Playlist:</div>
+        <div className="flex items-center justify-center sm:space-x-4 space-x-2">
+          <div className="sm:text-3xl text-lg font-bold">Choose Playlist:</div>
           <Dropdown token={accessToken} loggedIn={loggedIn} handleChange={setSelectedPlaylist} />
         </div>
       </div>
       <div className="w-4/5 border-2 border-secondary"></div>
-      <div className="w-4/5 mt-4 mb-12 space-y-4">
-        <div className="space-y-2">
-          <div className="text-3xl">Max Song Duration:</div>
-          <div className="flex-auto space-y-2">
+      <div className="w-4/5 sm:mt-4 mt-2 sm:mb-12 mb-6 sm:space-y-4 space-y-2">
+        <div className="sm:space-y-2 space-y-1">
+          <div className="sm:text-3xl text-xl">Max Song Duration:</div>
+          <div className="flex-auto sm:space-y-2 space-y-1">
             <Button changeSelect={() => setDuration(1)} selected={duration == 1}>1 Second</Button>
             <Button changeSelect={() => setDuration(2)} selected={duration == 2}>2 Seconds</Button>
             <Button changeSelect={() => setDuration(3)} selected={duration == 3}>3 Seconds</Button>
@@ -121,19 +121,19 @@ const CreateGameContent = () => {
             <Button changeSelect={() => setDuration(-1)} selected={duration == -1}>No Limit</Button>
           </div>
         </div>
-        <div className="space-y-2">
-          <div className="text-3xl">Play From:</div>
-          <div className="flex-auto space-y-2">
+        <div className="sm:space-y-2 space-y-1">
+          <div className="sm:text-3xl text-xl">Play From:</div>
+          <div className="flex-auto sm:space-y-2 space-y-1">
             <Button changeSelect={() => setPlayFrom({ ...playFrom, beginning: !playFrom.beginning })} selected={playFrom.beginning}>Beginning</Button>
             <Button changeSelect={() => setPlayFrom({ ...playFrom, middle: !playFrom.middle })} selected={playFrom.middle}>Middle</Button>
             <Button changeSelect={() => setPlayFrom({ ...playFrom, ending: !playFrom.ending })} selected={playFrom.ending}>Ending</Button>
             <Button changeSelect={() => setPlayFrom({ ...playFrom, random: !playFrom.random })} selected={playFrom.random}>Random</Button>
           </div>
         </div>
-        <div className="space-y-2">
-          <div className="text-3xl">Modifiers:</div>
-          <div className="flex-auto space-y-2">
-            <div>
+        <div className="sm:space-y-2 space-y-1">
+          <div className="sm:text-3xl text-xl">Modifiers:</div>
+          <div className="flex-auto sm:space-y-2 space-y-1">
+            <div className="space-y-1">
               <Button
                 changeSelect={() => setModifiersSong({ ...modifiersSong, originalSong: !modifiersSong.originalSong })}
                 selected={modifiersSong.originalSong}
@@ -151,7 +151,7 @@ const CreateGameContent = () => {
                 selected={modifiersSong.guitar}
               >Guitar</Button>
             </div>
-            <div>
+            <div className="space-y-1">
               <Button
                 changeSelect={() => setModifiersTempo({ ...modifiersTempo, originalTempo: !modifiersTempo.originalTempo })}
                 selected={modifiersTempo.originalTempo}
@@ -168,7 +168,7 @@ const CreateGameContent = () => {
           </div>
         </div>
       </div>
-      <div className="mb-4">
+      <div className="sm:mb-4 mb-0">
         {verifySelection() ? (
           <Link
           href={{
@@ -183,10 +183,10 @@ const CreateGameContent = () => {
               modifiersTempo: parseState(modifiersTempo)
             }
           }}
-          className="border-2 border-secondary rounded-lg py-4 px-16 text-4xl font-bold mx-2 text-primary bg-secondary transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
+          className="border-2 border-secondary rounded-lg sm:py-4 py-2 sm:px-16 px-8 sm:text-4xl text-xl font-bold mx-2 text-primary bg-secondary transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
           >Start Game</Link>
         ) : (
-          <div className="text-4xl mx-2 text-secondary">
+          <div className="sm:text-4xl text-md sm:mt-0 mt-1 mx-2 text-secondary text-center">
             Select a playlist and at least one setting per row
           </div>
         )}

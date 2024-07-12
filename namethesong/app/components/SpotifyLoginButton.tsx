@@ -16,10 +16,10 @@ const SpotifyLoginButton: React.FC<Props> = ({ loggedIn }) => {
 
   return (
     <button 
-      className="flex items-center bg-spotify border-secondary border-2 rounded-3xl py-2 px-6 text-2xl mx-2 hover:shadow-md"
+      className="flex items-center bg-spotify border-secondary border-2 rounded-3xl sm:py-2 py-1 sm:px-6 px-2 sm:text-2xl text-xs mx-2 hover:shadow-md"
       onClick={authUser}
     >
-      <FaSpotify className="mr-2 text-3xl"/>
+      <FaSpotify className="sm:mr-2 mr-1 sm:text-3xl text-xl"/>
       {loggedIn ? "Logged in" : "Login with Spotify to use custom/followed playlists"}
     </button>
   )

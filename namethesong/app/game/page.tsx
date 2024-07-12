@@ -172,7 +172,7 @@ const GameContent = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <div className="inline-flex justify-between w-11/12 items-center mb-4 mt-4">
-        <div className="text-5xl font-bold">Score: &nbsp;{songsCorrect} / {songNumber - songsSkipped}</div>
+        <div className="sm:text-5xl text-3xl font-bold">Score: &nbsp;{songsCorrect} / {songNumber - songsSkipped}</div>
         <Link
           href={{
             pathname: "/finishgame",
@@ -183,19 +183,19 @@ const GameContent = () => {
               total: songNumber-songsSkipped,
             }
           }}
-          className={"border-2 border-secondary rounded-lg py-2 px-8 text-2xl mx-2 text-secondary bg-primary hover:underline active:opacity-80"}
+          className="border-2 border-secondary rounded-lg sm:py-2 py-1 sm:px-8 px-3 sm:text-2xl text-md mx-2 text-secondary bg-primary hover:underline active:opacity-80"
         >End Game</Link>
       </div>
       {songId ? (
-        <div className="flex flex-col items-center justify-center h-4/6 w-4/5">
-          <div className="text-5xl font-bold">{currentSongName}</div>
-          <div className="text-3xl mb-2">{currentSongArtist}</div>
+        <div className="flex flex-col items-center justify-end h-4/6 w-11/12">
+          <div className="sm:text-5xl text-3xl font-bold text-center">{currentSongName}</div>
+          <div className="sm:text-3xl text-xl text-center mb-2">{currentSongArtist}</div>
           <div className="flex flox-row">
             {currentPlayFrom && <SettingLabel>{currentPlayFrom}</SettingLabel>}
             {currentModifiersSong && <SettingLabel>{currentModifiersSong}</SettingLabel>}
             {currentModifiersTempo && <SettingLabel>{currentModifiersTempo}</SettingLabel>}
           </div>
-          <div className="mt-2 text-3xl font-bold">
+          <div className="mt-2">
             <YoutubePlayer 
               songId={songId}
               songDuration={songDuration}
@@ -207,12 +207,12 @@ const GameContent = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-4/6 w-4/5 text-3xl font-bold animate-pulse">Loading Song...</div>
+        <div className="flex flex-col items-center justify-center h-4/6 w-11/12 text-3xl font-bold animate-pulse">Loading Song...</div>
       )}
-      <div className="flex flex-col items-center my-4">
-        <div className="flex items-center justify-center mb-2 space-x-4">
+      <div className="flex flex-col items-center my-4 sm:mb-0 mb-12">
+        <div className="flex items-center justify-center mb-2 sm:space-x-4 space-x-2">
           <div
-            className="flex items-center justify-center font-bold border-4 border-secondary rounded-lg bg-secondary text-primary text-8xl w-64 h-24 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
+            className="flex items-center justify-center font-bold border-4 border-secondary rounded-lg bg-secondary text-primary sm:text-8xl text-6xl sm:w-64 w-40 sm:h-24 h-20 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
             onClick={() => {
               if (songId) {
                 setSongNumber(songNumber + 1);
@@ -223,7 +223,7 @@ const GameContent = () => {
             <HiCheck />
           </div>
           <div
-            className="flex items-center justify-center font-bold border-4 border-secondary rounded-lg bg-secondary text-primary text-8xl w-64 h-24 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
+            className="flex items-center justify-center font-bold border-4 border-secondary rounded-lg bg-secondary text-primary sm:text-8xl text-6xl sm:w-64 w-40 sm:h-24 h-20 hover:cursor-pointer active:bg-gray-200 active:border-gray-200"
             onClick={() => {
               if (songId) {
                 setSongNumber(songNumber + 1);
@@ -234,7 +234,7 @@ const GameContent = () => {
           </div>
         </div>
         <div
-          className="flex items-center justify-center border-2 border-secondary rounded-lg w-24 h-10 hover:cursor-pointer hover:underline active:opacity-80"
+          className="flex items-center justify-center border-2 border-secondary rounded-lg sm:w-24 w-20 sm:h-10 h-8 hover:cursor-pointer hover:underline active:opacity-80"
           onClick={() => {
             if (songId) {
               setSongNumber(songNumber + 1);
@@ -242,10 +242,10 @@ const GameContent = () => {
             }
           }}
         >
-          <div className="text-2xl mr-1">
+          <div className="sm:text-2xl text-lg mr-1">
             skip
           </div>
-          <TbPlayerTrackNextFilled className="text-xl" />
+          <TbPlayerTrackNextFilled className="sm:text-xl text-md" />
         </div>
       </div>
     </div>

@@ -39,7 +39,7 @@ const Dropdown: React.FC<Props> = ({ token, loggedIn, handleChange }) => {
 
   return (
     <Select 
-        className="text-lg text-black w-96"
+        className="sm:text-lg text-sm text-black sm:w-96 w-48"
         options={options}
         onChange={(event) => handleChange?.(event ? event.value : null)}
     />
