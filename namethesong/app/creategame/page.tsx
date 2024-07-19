@@ -109,7 +109,7 @@ const CreateGameContent = () => {
         </div>
       </div>
       <div className="w-4/5 border-2 border-secondary"></div>
-      <div className="w-4/5 sm:mt-4 mt-2 sm:mb-12 mb-6 sm:space-y-4 space-y-2">
+      <div className="w-4/5 sm:mt-4 mt-2 sm:mb-12 mb-4 sm:space-y-4 space-y-2">
         <div className="sm:space-y-2 space-y-1">
           <div className="sm:text-3xl text-xl">Max Song Duration:</div>
           <div className="flex-auto sm:space-y-2 space-y-1">
@@ -183,11 +183,11 @@ const CreateGameContent = () => {
               modifiersTempo: parseState(modifiersTempo)
             }
           }}
-          className="border-2 border-secondary rounded-lg sm:py-4 py-2 sm:px-16 px-8 sm:text-4xl text-xl font-bold mx-2 text-primary bg-secondary transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
+          className="border-2 border-secondary rounded-lg sm:py-4 py-3 sm:px-16 px-8 sm:text-4xl text-xl font-bold mx-2 text-primary bg-secondary transition ease-in-out hover:font-extrabold hover:shadow-2xl active:bg-gray-200 active:border-gray-200"
           >Start Game</Link>
         ) : (
-          <div className="sm:text-4xl text-md sm:mt-0 mt-1 mx-2 text-secondary text-center">
-            Select a playlist and at least one setting per row
+          <div className="sm:text-3xl text-md sm:mt-1 mt-0 mx-2 font-bold text-secondary text-center">
+            Select a playlist, a duration, and at least one play from, song type, song tempo
           </div>
         )}
       </div>
