@@ -1,7 +1,7 @@
 # Name the Song
 
 ### Try it here: https://namethesong.vercel.app (works on mobile too)
-*(Note: you won't be able to login with Spotify account due to Spotify Developer Mode, see below for more)*
+*(Note: you won't be able to login with Spotify account using this link due to Spotify Developer Mode, see below for more)*
 
 <br />
 
@@ -12,8 +12,10 @@ One player has the device and controls the audio, while the other player attempt
 There are no rules beyond this (these aren't even really rules, just instructions on how to play), the game is meant to be played however the players like. Features in the game exist to allow for flexibility in the way the game is played.
 
 ### Notes on game features:
+- To use a different Spotify account after logging in, you must login to a different Spotify account on a separate browser page
 - Select as many settings in the Create Game page as you like, songs will be a random combination of all settings selected (only setting that is limited to one selection is Duration)
 - Hear Again button will play from beginning of audio clip to where song currently is, no matter the Duration setting
+- If playing on mobile YouTube videos will not autoplay. This is due to restrictions by the mobile browsers themselves, not the game
 
 <br/>
 
