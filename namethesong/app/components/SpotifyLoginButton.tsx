@@ -20,7 +20,7 @@ const SpotifyLoginButton: React.FC<Props> = ({ loggedIn }) => {
       onClick={authUser}
     >
       <FaSpotify className="sm:mr-2 mr-1 sm:text-3xl text-xl"/>
-      {loggedIn ? "Logged in" : "Login with Spotify to use custom/followed playlists"}
+      {loggedIn ? "Logged in" : "Login with Spotify to play"}
     </button>
   )
 }

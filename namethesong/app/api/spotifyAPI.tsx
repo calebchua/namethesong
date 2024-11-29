@@ -17,7 +17,8 @@ export const getSpotifyToken = async (code: string | null): Promise<ReturnObject
     user = true;
   }
   else {
-    token = await getClientCredentialToken();
+    // token = await getClientCredentialToken();
+    token = null;
     user = false;
   }
   return { token, user };
