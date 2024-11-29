@@ -89,6 +89,7 @@ const generateRandomString = (length: number) => {
 // SPOTIFY DATA API FUNCTIONS
 
 // gets kpop playlists (can also replace kpop with any genre that exists in spotify)
+// * * * * * * * * * * * API CALL DEPRECATED \/ * * * * * * * * * * *
 export const getPublicPlaylists = async (token: string | null) => {
   try {
     const response = await fetch("https://api.spotify.com/v1/browse/categories/kpop/playlists", {
@@ -104,6 +105,8 @@ export const getPublicPlaylists = async (token: string | null) => {
     return null;
   }
 }
+// * * * * * * * * * * * API CALL DEPRECATED ^ * * * * * * * * * * *
+
 
 // gets user's list of playlists
 export const getUserPlaylists = async (token: string | null) => {

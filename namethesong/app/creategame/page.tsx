@@ -105,7 +105,7 @@ const CreateGameContent = () => {
         </div>
         <div className="flex items-center justify-center sm:space-x-4 space-x-2">
           <div className="sm:text-3xl text-lg font-bold">Choose Playlist:</div>
-          <Dropdown token={accessToken} loggedIn={loggedIn} handleChange={setSelectedPlaylist} />
+          {accessToken ? <Dropdown token={accessToken} loggedIn={loggedIn} handleChange={setSelectedPlaylist} /> : <div>Login to select playlists</div>}
         </div>
       </div>
       <div className="w-4/5 border-2 border-secondary"></div>
